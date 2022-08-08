@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Aug  8 10:21:03 2022
+# Make data base, printed on Mon Aug  8 12:16:08 2022
 
 # Variables
 
@@ -59,13 +57,13 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.116
+GNOME_TERMINAL_SERVICE = :1.1357
 # makefile
 MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/alvaro/mrst
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -85,7 +83,7 @@ CONDA_SHLVL = 1
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 3403
+VSCODE_PID = 9078
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -119,7 +117,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/c5d609ad_bb96_418f_9289_7571928707fb
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/44a287f2_e446_4674_ab58_9b24f096353a
 # environment
 MAKELEVEL := 0
 # default
@@ -229,9 +227,9 @@ GDMSESSION = default
 
 # Directories
 
-# . (device 2050, inode 5562397): 12 files, no impossibilities.
+# . (device 2050, inode 5562397): 11 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -242,7 +240,7 @@ GDMSESSION = default
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-04 22:41:58.57858299
+#  Last modified 2022-08-08 11:58:59.808342424
 #  File has been updated.
 #  Successfully updated.
 
@@ -264,8 +262,8 @@ run:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 2):
-	g++ *.cpp -o mrst
-	./mrst < input.txt
+	g++ *.cpp -o mrst.out
+	./mrst.out < input.txt
 
 # files hash-table stats:
 # Load=5/1024=0%, Rehash=0, Collisions=0/15=0%
@@ -275,13 +273,15 @@ run:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 18 / storage = 148 B / avg = 8 B
-# current buf: size = 8162 B / used = 148 B / count = 18 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 17 / storage = 143 B / avg = 8 B
+# current buf: size = 8162 B / used = 143 B / count = 17 / avg = 8 B
 
-# strcache performance: lookups = 23 / hit rate = 21%
+# strcache performance: lookups = 22 / hit rate = 22%
 # hash-table stats:
  
-# Load=18/8192=0%, Rehash=0, Collisions=0/23=0%
-# Finished Make data base on Mon Aug  8 10:21:03 2022
+make: *** No rule to make target 'all'.  Stop.
+
+# Load=17/8192=0%, Rehash=0, Collisions=0/22=0%
+# Finished Make data base on Mon Aug  8 12:16:08 2022
 
  

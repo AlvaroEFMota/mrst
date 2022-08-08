@@ -1,6 +1,6 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/alvaro/mrst'
-g++ *.cpp -o mrst
-./mrst < input.txt
+g++ *.cpp -o mrst.out
+./mrst.out < input.txt
 make: Leaving directory '/home/alvaro/mrst'
  

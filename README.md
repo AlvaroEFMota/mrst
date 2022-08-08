@@ -1,2 +1,2 @@
 # MRST Algorithm
-just type "make" to execute.
+After clonning the repository, just type "make" to execute.

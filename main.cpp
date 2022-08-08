@@ -35,7 +35,6 @@ GraphContainer GraphInit(){
         int vertex1, vertex2;
         cin >> vertex1 >> vertex2;
         G.graph[vertex1].push_back(vertex2);
-        G.graph[vertex2].push_back(vertex1);
     }
 
     ShowGraph(G, "Initial Graph");
