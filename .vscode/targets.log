@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug  9 22:54:25 2022
+# Make data base, printed on Wed Aug 10 23:18:11 2022
 
 # Variables
 
@@ -57,13 +57,13 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.2750
+GNOME_TERMINAL_SERVICE = :1.503
 # makefile
 MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/alvaro/mrst
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -83,7 +83,7 @@ CONDA_SHLVL = 1
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 33382
+VSCODE_PID = 31656
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -91,7 +91,7 @@ XDG_SESSION_TYPE = x11
 # environment
 CONDA_PYTHON_EXE = /home/alvaro/anaconda3/bin/python
 # environment
-SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/1436,unix/debian:/tmp/.ICE-unix/1436
+SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/1397,unix/debian:/tmp/.ICE-unix/1397
 # automatic
 *F = $(notdir $*)
 # environment
@@ -117,7 +117,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/f2a37708_f30a_43e4_afe4_fa5c12a9c865
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/7d458b39_2ae7_4f52_bd35_da9b63de9433
 # environment
 MAKELEVEL := 0
 # default
@@ -165,7 +165,7 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-SSH_AGENT_PID = 1343
+SSH_AGENT_PID = 1318
 # environment
 _ = /usr/bin/code
 # environment
@@ -279,7 +279,7 @@ run:
 # strcache performance: lookups = 23 / hit rate = 21%
 # hash-table stats:
 # Load=18/8192=0%, Rehash=0, Collisions=0/23=0%
-# Finished Make data base on Tue Aug  9 22:54:25 2022
+# Finished Make data base on Wed Aug 10 23:18:11 2022
 
  
 make: *** No rule to make target 'all'.  Stop.
