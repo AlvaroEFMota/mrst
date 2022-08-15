@@ -8,7 +8,7 @@ using namespace std;
 struct GraphContainer
 {
     vector<vector<int>> graph;
-    int *matching; //if mathing[5]=6, the edge {5,6} is in the matching, if matching[5]=-1 otherwise.
+    int *matching; // if mathing[5]=6, the edge {5,6} is in the matching, if matching[5]=-1 otherwise.
     int len;
     bool *part;
 };
@@ -17,16 +17,20 @@ GraphContainer GraphInit();
 void ShowGraph(GraphContainer &G, string graph_desc);
 void CalculateBipartite(GraphContainer &G);
 void BfsBipartite(GraphContainer &G, int source, bool *setted);
-void KuhnMunkres(GraphContainer &G);
+bool KuhnMunkres(GraphContainer &G);
+bool BfsAugmentPath(GraphContainer &G, int source);
 
 int main(int argc, char *argv[])
 {
     GraphContainer G = GraphInit();
 
-    if (G.len%2 != 0) {
+    if (G.len % 2 != 0)
+    {
         cout << "The graph G is pfaffian by emptiness" << endl;
         exit(0);
     }
+
+    ShowGraph(G, "Initialized Graph");
 }
 
 GraphContainer GraphInit()
@@ -57,6 +61,7 @@ GraphContainer GraphInit()
     ShowGraph(G, "Initial Graph");
 
     CalculateBipartite(G);
+    KuhnMunkres(G);
 
     return G;
 }
@@ -74,7 +79,27 @@ void ShowGraph(GraphContainer &G, string graph_desc)
         }
         cout << endl;
     }
-    cout << "--------------------" << endl;
+    cout << "-------- Matching ----------" << endl;
+    for (int i = 0; i < G.len / 2; ++i)
+    {
+        if (G.matching[i] != -1)
+        {
+            cout << i << " " << G.matching[i] << endl;
+        }
+    }
+    cout << "----------Parts-------------" << endl;
+    for (int i = 0; i < G.len; ++i)
+    {
+        if (G.part[i] == false)
+        {
+            cout << i << " black" << endl;
+        }
+        else
+        {
+            cout << i << " white" << endl;
+        }
+    }
+    cout << "-----------------------" << endl;
 }
 
 void CalculateBipartite(GraphContainer &G)
@@ -122,7 +147,8 @@ void BfsBipartite(GraphContainer &G, int source, bool *setted)
         color[vertex] = 2; // black
         for (vector<int>::iterator it = G.graph[vertex].begin(); it != G.graph[vertex].end(); ++it)
         {
-            if (setted[*it] == true && G.part[vertex] == G.part[*it]) {
+            if (setted[*it] == true && G.part[vertex] == G.part[*it])
+            {
                 cout << "The graph isn't bipartite pfaffian" << endl;
                 exit(0);
             }
@@ -140,18 +166,100 @@ void BfsBipartite(GraphContainer &G, int source, bool *setted)
     free(color);
 }
 
-/*void KuhnMunkres(GraphContainer &G) {
+bool KuhnMunkres(GraphContainer &G)
+{
     bool modified = true;
-    while (modified) {
-        modified = false;
-        for (int i = 0; i < G.len; ++i) {
-            if (G.matching[i] == -1) {
-                
+    int perfect_matching;
+    while (modified)
+    {
+        for (int i = 0; i < G.len; ++i)
+        {
+            perfect_matching = true;
+            if (G.matching[i] == -1)
+            {
+                perfect_matching = false;
+                modified = BfsAugmentPath(G, i);
             }
         }
+        if (perfect_matching)
+        {
+            modified = false;
+        }
     }
+    return perfect_matching;
 }
 
-bool BfsKuhnMunkres(GraphContainer &G, int source) {
+bool BfsAugmentPath(GraphContainer &G, int source)
+{
+    int target = -1;
+    cout << "inicio alvo" << target << endl;
+    queue<int> my_queue;
 
-}*/
+    // 0 = white, 1 = gray, 2 = black
+    int *control = (int *)malloc(sizeof(int) * G.len);
+    int *color = (int *)malloc(sizeof(int) * G.len);
+    int *previous = (int *)malloc(sizeof(int) * G.len);
+    for (int i = 0; i < G.len; ++i)
+    {
+        previous[i] = -1;
+        color[i] = 0; // white
+        control[i] = 0;
+    }
+
+    color[source] = 1;
+    control[source] = 0;
+    my_queue.push(source);
+
+    while (!my_queue.empty())
+    {
+        int vertex = my_queue.front();
+        my_queue.pop();
+        color[vertex] = 2;
+
+        if (control[vertex] % 2 == 0)
+        {
+            for (vector<int>::iterator it = G.graph[vertex].begin(); it != G.graph[vertex].end(); ++it)
+            {
+                if (color[*it] == 0)
+                {
+                    cout << "Adicionando o vertice " << *it << " na fila" << endl;
+                    my_queue.push(*it);
+                    previous[*it] = vertex;
+                    color[*it] = 1; // gray
+                    control[*it] = control[vertex] + 1;
+                    if (G.matching[*it] == -1)
+                    {
+                        target = *it;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            int v = G.matching[vertex];
+            my_queue.push(v);
+            previous[v] = vertex;
+            color[v] = 1;
+            control[v] = control[vertex] + 1;
+        }
+    }
+
+    if (target != -1)
+    {
+        int i = target;
+
+        while (previous[previous[i]] != -1)
+        {
+            G.matching[i] = previous[i];
+            G.matching[previous[i]] = i;
+            cout << "novo emparelhamento " << i << " " << previous[i] << endl;
+            i = previous[previous[i]];
+        }
+        G.matching[i] = previous[i];
+        G.matching[previous[i]] = i;
+        cout << "novo emparelhamento " << i << " " << previous[i] << endl;
+    }
+    cout << "inicio alvo" << target << endl;
+    return target != -1;
+}
