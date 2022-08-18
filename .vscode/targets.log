@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Aug 15 01:05:04 2022
+# Make data base, printed on Thu Aug 18 00:23:42 2022
 
 # Variables
 
@@ -15,9 +15,7 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-GJS_DEBUG_OUTPUT = stderr
-# environment
-VSCODE_CWD = /home/alvaro
+VSCODE_CWD = /home/alvaro/mrst
 # environment
 WINDOWPATH = 2
 # environment
@@ -40,6 +38,8 @@ PWD = /home/alvaro/mrst
 %D = $(patsubst %/,%,$(dir $%))
 # environment
 XDG_DATA_DIRS = /usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+# environment
+OLDPWD = /home/alvaro
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # automatic
@@ -56,12 +56,14 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# environment
+GNOME_TERMINAL_SERVICE = :1.1133
 # makefile
 MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/alvaro/mrst
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -81,7 +83,7 @@ CONDA_SHLVL = 1
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 9351
+VSCODE_PID = 23847
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -89,7 +91,7 @@ XDG_SESSION_TYPE = x11
 # environment
 CONDA_PYTHON_EXE = /home/alvaro/anaconda3/bin/python
 # environment
-SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/1429,unix/debian:/tmp/.ICE-unix/1429
+SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/1407,unix/debian:/tmp/.ICE-unix/1407
 # automatic
 *F = $(notdir $*)
 # environment
@@ -113,23 +115,21 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
 # environment
-GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+SHLVL = 1
 # environment
-SHLVL = 0
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/946a3db6_9115_49f4_900f_d6c583813573
 # environment
 MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/alvaro/Downloads/google-cloud-sdk/bin:/home/alvaro/.cargo/bin:/home/alvaro/anaconda3/bin:/home/alvaro/anaconda3/condabin:/opt/ngrok:/opt/node-v16.14.0-linux-x64/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/home/alvaro/.local/share/JetBrains/Toolbox/scripts
+PATH = /home/alvaro/Downloads/google-cloud-sdk/bin:/home/alvaro/anaconda3/bin:/home/alvaro/anaconda3/condabin:/home/alvaro/.cargo/bin:/opt/ngrok:/opt/node-v16.14.0-linux-x64/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/home/alvaro/.local/share/JetBrains/Toolbox/scripts
 # default
 MAKEFILES := 
 # environment
 LANGUAGE = en_US:en
 # automatic
 ^F = $(notdir $^)
-# environment
-INVOCATION_ID = 32edd3d8581544a5a115e216a0badaca
 # environment
 USERNAME = alvaro
 # automatic
@@ -139,7 +139,7 @@ GTK_IM_MODULE = ibus
 # environment
 XDG_CURRENT_DESKTOP = GNOME
 # environment
-LS_COLORS = 
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 # automatic
 +F = $(notdir $+)
 # environment
@@ -154,8 +154,6 @@ CONDA_DEFAULT_ENV = base
 CLUTTER_IM_MODULE = ibus
 # environment
 LOGNAME = alvaro
-# environment
-GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := run
 # environment
@@ -167,25 +165,21 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1165
+SSH_AGENT_PID = 1323
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 9351
-# environment
-SSH_AGENT_PID = 1348
-# environment
-_ = /usr/share/code/code
+_ = /usr/bin/code
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
+# environment
+COLORTERM = truecolor
 # environment
 _CE_M = 
 # environment
 NVM_RC_VERSION = 
 # environment
 NVM_CD_FLAGS = 
-# environment
-JOURNAL_STREAM = 8:24656
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -199,6 +193,8 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-d5c9c954-1.69.2-main.sock
 # environment
+TERM = xterm-256color
+# environment
 IM_CONFIG_PHASE = 1
 # default
 .RECIPEPREFIX := 
@@ -206,6 +202,12 @@ IM_CONFIG_PHASE = 1
 <F = $(notdir $<)
 # default
 SUFFIXES := 
+# environment
+VSCODE_CLI = 1
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+VTE_VERSION = 6203
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
@@ -217,7 +219,7 @@ _CE_CONDA =
 # environment
 GDMSESSION = default
 # variable set hash-table stats:
-# Load=103/1024=10%, Rehash=0, Collisions=4/133=3%
+# Load=104/1024=10%, Rehash=0, Collisions=11/134=8%
 
 # Pattern-specific Variable Values
 
@@ -225,9 +227,9 @@ GDMSESSION = default
 
 # Directories
 
-# . (device 2050, inode 5562397): 13 files, no impossibilities.
+# . (device 2050, inode 5562397): 16 files, no impossibilities.
 
-# 13 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -271,13 +273,13 @@ run:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 19 / storage = 157 B / avg = 8 B
-# current buf: size = 8162 B / used = 157 B / count = 19 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 22 / storage = 213 B / avg = 9 B
+# current buf: size = 8162 B / used = 213 B / count = 22 / avg = 9 B
 
-# strcache performance: lookups = 24 / hit rate = 20%
+# strcache performance: lookups = 27 / hit rate = 18%
 # hash-table stats:
-# Load=19/8192=0%, Rehash=0, Collisions=0/24=0%
-# Finished Make data base on Mon Aug 15 01:05:04 2022
+# Load=22/8192=0%, Rehash=0, Collisions=0/27=0%
+# Finished Make data base on Thu Aug 18 00:23:42 2022
 
  
 make: *** No rule to make target 'all'.  Stop.
