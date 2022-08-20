@@ -18,4 +18,7 @@ int main(int argc, char *argv[])
     G.remove_vertex(3);
     KuhnMunkres(G);
     ShowGraph(G, "Vertex 7 and 3 removed");
+    G.remove_edge(2,4);
+    //KuhnMunkres(G);
+    ShowGraph(G, "Edge (2,4) removed");
 }
