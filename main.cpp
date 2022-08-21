@@ -3,6 +3,9 @@
 
 using namespace std;
 
+vector<pair<int,int>> list_all_edges(GraphContainer &G);
+void removal_inadmissible_edges(GraphContainer &G);
+
 int main(int argc, char *argv[])
 {
     GraphContainer G = GraphInit();
@@ -19,6 +22,37 @@ int main(int argc, char *argv[])
     KuhnMunkres(G);
     ShowGraph(G, "Vertex 7 and 3 removed");
     G.remove_edge(2,4);
-    //KuhnMunkres(G);
+    KuhnMunkres(G);
     ShowGraph(G, "Edge (2,4) removed");
+    removal_inadmissible_edges(G);
+}
+
+void removal_inadmissible_edges(GraphContainer &G) {
+    vector<pair<int, int>> list = list_all_edges(G);
+    for (vector<pair<int, int>>::iterator i = list.begin(); i != list.end(); ++i) {
+        cout << (*i).first << "--" << (*i).second << endl;
+    }
+}
+
+vector<pair<int,int>> list_all_edges(GraphContainer &G) {
+    vector<pair<int,int>> list;
+    for (int i = 0; i < G.graph.size(); ++i) {
+        for (vector<int>::iterator j = G.graph[i].begin(); j != G.graph[i].end(); ++j) {
+            cout << i << " - " << (*j) << endl;
+            bool add = true;
+            for (vector<pair<int, int>>::iterator k = list.begin(); k != list.end(); ++k) {
+                if (((*k).first == i && (*k).second == (*j)) || ((*k).second == i && (*k).first == (*j))) {
+                    add = false;
+                }
+            }
+            if (add) {
+                pair<int, int> edge;
+                edge.first = i;
+                edge.second = (*j);
+                list.push_back(edge);
+            }
+        }
+    }
+
+    return list;
 }
