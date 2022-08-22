@@ -77,7 +77,6 @@ void CalculateBipartite(GraphContainer &G)
     {
         setted[i] = false;
     }
-    cout << "sei la pra que serve: " << *setted << endl;
 
     for (int source = 0; source < G.len; ++source)
     {
@@ -109,7 +108,6 @@ void BfsBipartite(GraphContainer &G, int source, bool *setted)
     while (!my_queue.empty())
     {
         int vertex = my_queue.front();
-        cout << "passando por " << vertex << endl;
         my_queue.pop();
         color[vertex] = 2; // black
         for (vector<int>::iterator it = G.graph[vertex].begin(); it != G.graph[vertex].end(); ++it)
@@ -121,7 +119,6 @@ void BfsBipartite(GraphContainer &G, int source, bool *setted)
             }
             if (color[*it] == 0)
             {
-                cout << "Adicionando o vertice " << *it << " na fila" << endl;
                 my_queue.push(*it);
                 color[*it] = 1; // gray
                 G.part[*it] = !G.part[vertex];
@@ -153,15 +150,12 @@ bool KuhnMunkres(GraphContainer &G)
             modified = false;
         }
     }
-    cout << "emparelhamento perfeito? " << perfect_matching << endl;
     return perfect_matching;
 }
 
 bool BfsAugmentPath(GraphContainer &G, int source)
 {
-    cout << "BfsAugmentPath(source=" << source << ")" << endl;
     int target = -1;
-    cout << "inicio alvo " << target << endl;
     queue<int> my_queue;
 
     // 0 = white, 1 = gray, 2 = black
@@ -182,7 +176,6 @@ bool BfsAugmentPath(GraphContainer &G, int source)
     while (!my_queue.empty() && target == -1)
     {
         int vertex = my_queue.front();
-        cout << "desempilhado: "<< vertex << endl;
         my_queue.pop();
         color[vertex] = 2;
 
@@ -192,7 +185,6 @@ bool BfsAugmentPath(GraphContainer &G, int source)
             {
                 if (color[*it] == 0)
                 {
-                    cout << "Adicionando o vertice " << *it << " na fila" << endl;
                     my_queue.push(*it);
                     previous[*it] = vertex;
                     color[*it] = 1; // gray
@@ -209,7 +201,6 @@ bool BfsAugmentPath(GraphContainer &G, int source)
         {
             int v = G.matching[vertex];
             my_queue.push(v);
-            cout << "Adicionando o vertice " << v << " da arestado emparelhamento na fila" << endl;
             previous[v] = vertex;
             color[v] = 1;
             control[v] = control[vertex] + 1;
@@ -224,13 +215,10 @@ bool BfsAugmentPath(GraphContainer &G, int source)
         {
             G.matching[i] = previous[i];
             G.matching[previous[i]] = i;
-            cout << "novo emparelhamento " << i << " " << previous[i] << endl;
             i = previous[previous[i]];
         }
         G.matching[i] = previous[i];
         G.matching[previous[i]] = i;
-        cout << "novo emparelhamento " << i << " " << previous[i] << endl;
     }
-    cout << "fim alvo " << target << endl;
     return target != -1;
 }

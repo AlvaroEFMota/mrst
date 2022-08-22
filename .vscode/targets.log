@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Aug 18 00:23:42 2022
+# Make data base, printed on Mon Aug 22 08:38:07 2022
 
 # Variables
 
@@ -57,7 +57,7 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.1133
+GNOME_TERMINAL_SERVICE = :1.105
 # makefile
 MAKEFLAGS = pqrR
 # makefile
@@ -83,7 +83,7 @@ CONDA_SHLVL = 1
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 23847
+VSCODE_PID = 3793
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -91,7 +91,7 @@ XDG_SESSION_TYPE = x11
 # environment
 CONDA_PYTHON_EXE = /home/alvaro/anaconda3/bin/python
 # environment
-SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/1407,unix/debian:/tmp/.ICE-unix/1407
+SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/1438,unix/debian:/tmp/.ICE-unix/1438
 # automatic
 *F = $(notdir $*)
 # environment
@@ -117,7 +117,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/946a3db6_9115_49f4_900f_d6c583813573
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/f6a1bb43_5041_4daf_bfb4_c77a47b8cf56
 # environment
 MAKELEVEL := 0
 # default
@@ -165,7 +165,7 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-SSH_AGENT_PID = 1323
+SSH_AGENT_PID = 1361
 # environment
 _ = /usr/bin/code
 # environment
@@ -227,9 +227,9 @@ GDMSESSION = default
 
 # Directories
 
-# . (device 2050, inode 5562397): 16 files, no impossibilities.
+# . (device 2050, inode 5562397): 15 files, no impossibilities.
 
-# 16 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -273,14 +273,15 @@ run:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 22 / storage = 213 B / avg = 9 B
-# current buf: size = 8162 B / used = 213 B / count = 22 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 21 / storage = 208 B / avg = 9 B
+# current buf: size = 8162 B / used = 208 B / count = 21 / avg = 9 B
 
-# strcache performance: lookups = 27 / hit rate = 18%
+# strcache performance: lookups = 26 / hit rate = 19%
 # hash-table stats:
-# Load=22/8192=0%, Rehash=0, Collisions=0/27=0%
-# Finished Make data base on Thu Aug 18 00:23:42 2022
-
  
 make: *** No rule to make target 'all'.  Stop.
 
+# Load=21/8192=0%, Rehash=0, Collisions=0/26=0%
+# Finished Make data base on Mon Aug 22 08:38:07 2022
+
+ 

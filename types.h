@@ -1,6 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <bits/stdc++.h>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -99,6 +100,26 @@ struct GraphContainer
             matching[v1] = -1;
             matching[v2] = -1;
         }
+    }
+
+    void remove_vertex_vector(vector<int> vertices) {
+        sort(vertices.begin(), vertices.end(), greater<int>());
+        for (vector<int>::iterator i = vertices.begin(); i != vertices.end(); ++i) {
+            remove_vertex((*i));
+        }
+    }
+
+    GraphContainer clone() {
+        GraphContainer G_clone;
+        G_clone.graph = graph;
+        G_clone.len = len;
+        G_clone.matching = (int*) malloc(sizeof(int)*len);
+        G_clone.part = (bool *)malloc(sizeof(bool)*len);
+        for (int i = 0; i < len; ++i) {
+            G_clone.matching[i] = matching[i];
+            G_clone.part[i] = part[i];
+        }
+        return G_clone;
     }
 };
 

@@ -25,12 +25,22 @@ int main(int argc, char *argv[])
     KuhnMunkres(G);
     ShowGraph(G, "Edge (2,4) removed");
     removal_inadmissible_edges(G);
+    ShowGraph(G, "After th removal_inadmissible_edges");
 }
 
 void removal_inadmissible_edges(GraphContainer &G) {
     vector<pair<int, int>> list = list_all_edges(G);
     for (vector<pair<int, int>>::iterator i = list.begin(); i != list.end(); ++i) {
         cout << (*i).first << "--" << (*i).second << endl;
+        GraphContainer G_tmp = G.clone();
+        vector<int> vertices;
+        vertices.push_back((*i).first);
+        vertices.push_back((*i).second);
+        G_tmp.remove_vertex_vector(vertices);
+        if (!KuhnMunkres(G_tmp)){ // it's not a perfect_matching
+            cout << "Removed the inadmissble edge {" << (*i).first << ", " << (*i).second << "}" << endl;
+            G.remove_edge((*i).first, (*i).second);
+        }
     }
 }
 
