@@ -1,6 +1,3 @@
-//#include "initial_verification.h"
-//#include "types.h"
-
 #include "GraphContainer.hpp"
 #include "InadmissibleEdges.hpp"
 #include <iostream>
