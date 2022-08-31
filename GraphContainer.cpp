@@ -5,11 +5,11 @@ GraphContainer::GraphContainer() {
     matc_size = 0;
 }
 
-GraphContainer::GraphContainer(int size) {
-    graph.resize(size);
-    part.resize(size, false);
-    matching.resize(size, -1);
-    n_vert = size;
+GraphContainer::GraphContainer(int n_vertices) {
+    graph.resize(n_vertices);
+    part.resize(n_vertices, false);
+    matching.resize(n_vertices, -1);
+    n_vert = n_vertices;
     matc_size = 0;
 }
 
