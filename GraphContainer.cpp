@@ -1,18 +1,49 @@
 #include "GraphContainer.hpp"
 
+/* Generate an empty GraphConteiner with no vertex, no matching
+ * with the n_vert and matc_size iquals to zero.
+ */
 GraphContainer::GraphContainer() {
     n_vert = 0;
     matc_size = 0;
 }
 
-GraphContainer::GraphContainer(int n_vertices) {
-    graph.resize(n_vertices);
-    part.resize(n_vertices, false);
-    matching.resize(n_vertices, -1);
-    n_vert = n_vertices;
+
+/* Initialize a graph with "size" vertices, a partition with all vertices in the
+ * same part, an empty matching. When matching[v] = -1 means the vertex v is not matched.
+ */
+GraphContainer::GraphContainer(int size) {
+    graph.resize(size);
+    part.resize(size, false);
+    matching.resize(size, -1);
+    n_vert = size;
     matc_size = 0;
 }
 
+/* Read a graph struct from stdin and create a GraphContainer struct with the graph readed in it.
+ * In the graph description file, the first line contain two integers which describes the number
+ * of vertices (num_vertices) and the number of edges (num_edges), the following lines with
+ * two integers each describes the edges of the graph in which the line with the numbers (2 5)
+ * describes the edge (2, 5) and the edge (5, 2). The vertices in the edge description of the file must
+ * be less than num_vertices, and the number of edges must be equal to num_edges. The return is a GraphContainer struct with
+ * a representation of the input graph. The part vector will be initialized with false, whith means that
+ * all the vertices are in the same part of the bipartition. the matching vector will be initialized
+ * with -1, which means there are no matching. The number of vertices n_vert will be initialized with
+ * num_vertices and the matc_size with zero.
+ * 
+ * example of k33 input graph
+ * ----- input.txt -----
+ * 6 9
+ * 0 3
+ * 0 4
+ * 0 5
+ * 1 3
+ * 1 4
+ * 1 5
+ * 2 3
+ * 2 4
+ * 2 5
+ */
 void GraphContainer::GraphInitFromStdin()
 {
     int num_vertices, num_edges;
@@ -38,12 +69,17 @@ void GraphContainer::GraphInitFromStdin()
     }
 }
 
+/* Add the edges (vertex1, vertex2) and (vertex2, vertex1) in the current graph.
+ */
 void GraphContainer::AddEdge(int vertex1, int vertex2)
 {
     graph[vertex1].push_back(vertex2);
     graph[vertex2].push_back(vertex1);
 }
 
+/* Compute the parts of the bipartition of the current graph. If the graph is not
+ * bipartite, the program exits and print the message "The graph isn't bipartite".
+ */
 void GraphContainer::ComputeBipartite()
 {
     // setted is a vector that store information about if the partition of a vertex was setted.
@@ -96,6 +132,10 @@ void GraphContainer::BfsBipartite(int source, vector<bool> &setted)
     // delelte color
 }
 
+/* Find the maximum matching in the current graph, if already exist any
+ * matching in the current GraphContainer struct, then this algorithm will use such mathing
+ * to find the maximum matching
+ */
 void GraphContainer::KuhnMunkres()
 {
     bool modified = true;
@@ -190,6 +230,8 @@ bool GraphContainer::BfsAugmentPath(int source)
     return target != -1;
 }
 
+/* Show the graph, the partition and the matchings
+ */
 void GraphContainer::ShowGraph(string graph_desc)
 {
     int count = 0;
@@ -222,6 +264,10 @@ void GraphContainer::ShowGraph(string graph_desc)
     cout << "-----------------------" << endl;
 }
 
+/* Remove an edge of the current graph. Tt removes the edges (v1,v2) and (v2,v1), if the
+ * vertices v1 and v2 are matched, the matching[v1] and matching[v2] will be setted to -1,
+ * and the matc_size will be subtracted 1.
+ */
 void GraphContainer::RemoveEdge(int v1, int v2)
 {
     for (vector<int>::iterator i = graph[v1].begin(); i != graph[v1].end(); ++i)
@@ -272,6 +318,7 @@ void GraphContainer::IsolateVerteces(vector<int> vectors) {
     }       
 }
 
+/* Verify if the current matching is a perfect matching. Return true if yes and false if not*/
 bool GraphContainer::PerfectMatching() {
     return matc_size == n_vert/2;
 }
