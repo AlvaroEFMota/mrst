@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Aug 22 08:38:07 2022
+# Make data base, printed on Thu Sep  1 23:45:03 2022
 
 # Variables
 
@@ -18,8 +20,6 @@ LC_ALL = C
 VSCODE_CWD = /home/alvaro/mrst
 # environment
 WINDOWPATH = 2
-# environment
-NVM_DIR = /home/alvaro/.nvm
 # environment
 GDM_LANG = en_US.UTF-8
 # default
@@ -37,7 +37,7 @@ PWD = /home/alvaro/mrst
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
-XDG_DATA_DIRS = /usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+XDG_DATA_DIRS = /usr/share/gnome:/usr/local/share/:/usr/share/
 # environment
 OLDPWD = /home/alvaro
 # automatic
@@ -47,7 +47,7 @@ OLDPWD = /home/alvaro
 # environment
 CONDA_PROMPT_MODIFIER = (base) 
 # environment
-VSCODE_CODE_CACHE_PATH = /home/alvaro/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+VSCODE_CODE_CACHE_PATH = /home/alvaro/.config/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
 # environment
 LANG = C
 # environment
@@ -57,13 +57,13 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.105
+GNOME_TERMINAL_SERVICE = :1.491
 # makefile
 MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/alvaro/mrst
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -83,7 +83,7 @@ CONDA_SHLVL = 1
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 3793
+VSCODE_PID = 20029
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -91,7 +91,7 @@ XDG_SESSION_TYPE = x11
 # environment
 CONDA_PYTHON_EXE = /home/alvaro/anaconda3/bin/python
 # environment
-SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/1438,unix/debian:/tmp/.ICE-unix/1438
+SESSION_MANAGER = local/debian:@/tmp/.ICE-unix/1456,unix/debian:/tmp/.ICE-unix/1456
 # automatic
 *F = $(notdir $*)
 # environment
@@ -117,13 +117,13 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/f6a1bb43_5041_4daf_bfb4_c77a47b8cf56
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/5f3656c5_8330_4bed_8999_497c262aa0a3
 # environment
 MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/alvaro/Downloads/google-cloud-sdk/bin:/home/alvaro/anaconda3/bin:/home/alvaro/anaconda3/condabin:/home/alvaro/.cargo/bin:/opt/ngrok:/opt/node-v16.14.0-linux-x64/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/home/alvaro/.local/share/JetBrains/Toolbox/scripts
+PATH = /home/alvaro/anaconda3/bin:/home/alvaro/anaconda3/condabin:/home/alvaro/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/alvaro/.local/share/JetBrains/Toolbox/scripts
 # default
 MAKEFILES := 
 # environment
@@ -165,7 +165,7 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-SSH_AGENT_PID = 1361
+SSH_AGENT_PID = 1317
 # environment
 _ = /usr/bin/code
 # environment
@@ -177,10 +177,6 @@ COLORTERM = truecolor
 # environment
 _CE_M = 
 # environment
-NVM_RC_VERSION = 
-# environment
-NVM_CD_FLAGS = 
-# environment
 XDG_SESSION_CLASS = user
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
@@ -191,7 +187,7 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-d5c9c954-1.69.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-d5c9c954-1.70.2-main.sock
 # environment
 TERM = xterm-256color
 # environment
@@ -216,10 +212,11 @@ XDG_MENU_PREFIX = gnome-
 CONDA_EXE = /home/alvaro/anaconda3/bin/conda
 # environment
 _CE_CONDA = 
+ 
 # environment
 GDMSESSION = default
 # variable set hash-table stats:
-# Load=104/1024=10%, Rehash=0, Collisions=11/134=8%
+# Load=101/1024=10%, Rehash=0, Collisions=11/131=8%
 
 # Pattern-specific Variable Values
 
@@ -227,9 +224,9 @@ GDMSESSION = default
 
 # Directories
 
-# . (device 2050, inode 5562397): 15 files, no impossibilities.
+# . (device 2050, inode 3420993): 17 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -240,7 +237,7 @@ GDMSESSION = default
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-08 11:58:59.808342424
+#  Last modified 2022-08-26 02:16:56.522222411
 #  File has been updated.
 #  Successfully updated.
 
@@ -273,15 +270,12 @@ run:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 21 / storage = 208 B / avg = 9 B
-# current buf: size = 8162 B / used = 208 B / count = 21 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 23 / storage = 273 B / avg = 11 B
+# current buf: size = 8162 B / used = 273 B / count = 23 / avg = 11 B
 
-# strcache performance: lookups = 26 / hit rate = 19%
+# strcache performance: lookups = 28 / hit rate = 17%
 # hash-table stats:
- 
-make: *** No rule to make target 'all'.  Stop.
-
-# Load=21/8192=0%, Rehash=0, Collisions=0/26=0%
-# Finished Make data base on Mon Aug 22 08:38:07 2022
+# Load=23/8192=0%, Rehash=0, Collisions=0/28=0%
+# Finished Make data base on Thu Sep  1 23:45:03 2022
 
  
