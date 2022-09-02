@@ -31,7 +31,20 @@ public:
      * edges must be equal n_edges. Returns a GraphContainer object containing the
      * graph described in it, an empty matching, all vertices in the same part of
      * the bipartition and the n_vert and matc_size iquals to 0.
-     **/
+     * 
+     * example of k33 input graph
+     * ----- input.txt -----
+     * 6 9
+     * 0 3
+     * 0 4
+     * 0 5
+     * 1 3
+     * 1 4
+     * 1 5
+     * 2 3
+     * 2 4
+     * 2 5
+     */
     void GraphInitFromStdin();
 
     /* Receive an not oriented edge described through the vertices vertex1 and
@@ -40,12 +53,33 @@ public:
      **/
     void AddEdge(int vertex1, int vertex2);
 
-
+    /* Compute the parts of the bipartition of the current graph. If the graph is not
+     * bipartite, the program exits and print the message "The graph isn't bipartite".
+     */
     void ComputeBipartite();
+
+    /* Find the maximum matching in the current graph, if already exist any
+     * matching in the current GraphContainer struct, then this algorithm will use such mathing
+     * to find the maximum matching
+     */
     void KuhnMunkres();
+
+    /* Show the graph, the partition and the matchings.
+     **/
     void ShowGraph(string graph_desc);
+
+    /* Remove an edge of the current graph. Tt removes the edges (v1,v2) and (v2,v1), if the
+     * vertices v1 and v2 are matched, the matching[v1] and matching[v2] will be setted to -1,
+     * and the matc_size will be subtracted 1.
+     */
     void RemoveEdge(int v1, int v2);
+
+    /* Remove all the in the cut edges of vectors
+     */
     void IsolateVerteces(vector<int> vectors);
+
+    /* Verify if the current matching is a perfect matching. Return true if yes and false if not
+     */
     bool PerfectMatching();
 
 private:
