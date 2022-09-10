@@ -2,17 +2,15 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "build",
+            "type": "shell",
+            "label": "build",
             "command": "g++",
             "args": [
                 "-o",
                 "mrst",
                 "*.cpp",
                 "-g",
-                "-v"
             ],
-            "isShellCommand": true,
-            "showOutput": "always",
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": [
