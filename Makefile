@@ -1,3 +1,3 @@
 run:
-	g++ *.cpp -o mrst
+	g++ src/*.cpp -o mrst
 	./mrst < input.txt

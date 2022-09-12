@@ -8,7 +8,7 @@
             "args": [
                 "-o",
                 "mrst",
-                "*.cpp",
+                "src/*.cpp",
                 "-g",
             ],
             "problemMatcher": {

@@ -1,15 +1,17 @@
 //fazendo commit na master
 #include "GraphContainer.hpp"
 #include "InadmissibleEdges.hpp"
+#include "TightCutDecomposition.hpp"
 #include <iostream>
 
 
 using namespace std;
 
-vector<pair<pair<int,int>,pair<int,int>>> list_all_pair_of_edges_not_adjacent(GraphContainer &G);
+/*vector<pair<pair<int,int>,pair<int,int>>> list_all_pair_of_edges_not_adjacent(GraphContainer &G);
 vector<GraphContainer> TightCutReduction(GraphContainer &G);
 vector<bool> FindShores(GraphContainer &G, vector<int> removed_vertices);
 vector<int> BfsFindShore(GraphContainer &G, int source);
+*/
 
 int main(int argc, char *argv[])
 {
@@ -41,6 +43,7 @@ int main(int argc, char *argv[])
     
     return 0;
 }
+/*
 
 vector<GraphContainer> TightCutReduction(GraphContainer &G) {
     vector<pair<pair<int,int>,pair<int,int>>> pair_edges = list_all_pair_of_edges_not_adjacent(G);
@@ -84,9 +87,9 @@ vector<pair<pair<int,int>,pair<int,int>>> list_all_pair_of_edges_not_adjacent(Gr
         }
     }
 
-    /*for (vector<pair<pair<int, int>, pair<int, int> > >:: iterator it = list_pair_edges.begin(); it != list_pair_edges.end(); ++it) {
-        cout << "[{" << (*it).first.first << ", " << (*it).first.second << "}, {" << (*it).second.first << ", " << (*it).second.second <<"}]" << endl;
-    }*/
+    //for (vector<pair<pair<int, int>, pair<int, int> > >:: iterator it = list_pair_edges.begin(); it != list_pair_edges.end(); ++it) {
+    //    cout << "[{" << (*it).first.first << ", " << (*it).first.second << "}, {" << (*it).second.first << ", " << (*it).second.second <<"}]" << endl;
+    //}
 
     return list_pair_edges;
 }
@@ -169,3 +172,4 @@ vector<int> BfsFindShore(GraphContainer &G, int source) {
     }
     return shore_vec;
 }
+*/
