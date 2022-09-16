@@ -6,6 +6,8 @@
 GraphContainer::GraphContainer() {
     n_vert = 0;
     matc_size = 0;
+    isBipartite = false;
+    bipartitionComputed = false;
 }
 
 
@@ -18,6 +20,7 @@ GraphContainer::GraphContainer(int size) {
     matching.resize(size, -1);
     n_vert = size;
     matc_size = 0;
+    
 }
 
 void GraphContainer::GraphInitFromStdin()
@@ -51,7 +54,7 @@ void GraphContainer::AddEdge(int vertex1, int vertex2)
     graph[vertex2].push_back(vertex1);
 }
 
-void GraphContainer::ComputeBipartite()
+bool GraphContainer::ComputeBipartite()
 {
     // setted is a vector that store information about if the partition of a vertex was setted.
     vector<bool> setted(n_vert, false);
@@ -60,13 +63,16 @@ void GraphContainer::ComputeBipartite()
     {
         if (setted[source] == false)
         {
-            BfsBipartite(source, setted);
+            if (!BfsBipartite(source, setted)) {
+                return false;
+            }
         }
     }
+    return true;
     // delete setted
 }
 
-void GraphContainer::BfsBipartite(int source, vector<bool> &setted)
+bool GraphContainer::BfsBipartite(int source, vector<bool> &setted)
 {
     queue<int> my_queue;
     // 0 = white, 1 = gray, 2 = black
@@ -85,10 +91,10 @@ void GraphContainer::BfsBipartite(int source, vector<bool> &setted)
         color[vertex] = 2; // black
         for (vector<int>::iterator it = graph[vertex].begin(); it != graph[vertex].end(); ++it)
         {
-            if (setted[*it] == true && part[vertex] == part[*it])
+            if (setted[*it] == true && part[vertex] == part[*it]) // Use this information as 
+            // return.
             {
-                cout << "The graph isn't bipartite" << endl;
-                exit(0);
+                return false;
             }
             if (color[*it] == 0)
             {
@@ -101,9 +107,11 @@ void GraphContainer::BfsBipartite(int source, vector<bool> &setted)
     }
 
     // delelte color
+    return true;
+    
 }
 
-void GraphContainer::KuhnMunkres()
+bool GraphContainer::KuhnMunkres()
 {
     bool modified = true;
     while (modified)
@@ -128,6 +136,11 @@ void GraphContainer::KuhnMunkres()
         }
     }
     matc_size = count/2;
+    return matc_size == n_vert/2;
+}
+
+bool GraphContainer::PerfectMatching() {
+    return matc_size == n_vert/2;
 }
 
 bool GraphContainer::BfsAugmentPath(int source)
@@ -257,17 +270,17 @@ void GraphContainer::RemoveEdge(int v1, int v2)
     }
 }
 
-void GraphContainer::IsolateVerteces(vector<int> vectors) {
+void GraphContainer::IsolateVerteces(vector<int> verticesToIsolate) {
     vector<pair<int, int> > edge_list;
-    for (vector<int>::iterator i = vectors.begin(); i != vectors.end(); ++i) {
+    for (vector<int>::iterator i = verticesToIsolate.begin(); i != verticesToIsolate.end(); ++i) {
         for (vector<int>::iterator j = graph[*i].begin(); j != graph[*i].end(); ++j) {
             bool in = false;
-            for (vector<int>::iterator k = vectors.begin(); k != vectors.end(); ++k) {
+            for (vector<int>::iterator k = verticesToIsolate.begin(); k != verticesToIsolate.end(); ++k) {
                 if ((*j) == (*k)) {
                     in = true;
                 }
             }
-            if (!in) {
+            if (!in) { // use verticesToIsolate.find(*j) != verticesToIsolate.end(), remove 269--273
                 pair<int, int> edge(*i, *j);
                 edge_list.push_back(edge);
             }
@@ -277,8 +290,4 @@ void GraphContainer::IsolateVerteces(vector<int> vectors) {
     for (vector<pair<int, int> >::iterator i = edge_list.begin(); i != edge_list.end(); ++i) {
         RemoveEdge((*i).first, (*i).second);
     }       
-}
-
-bool GraphContainer::PerfectMatching() {
-    return matc_size == n_vert/2;
 }

@@ -17,7 +17,8 @@ public:
     int n_vert;    // number of verteces
     int matc_size; // size of the matching
 
-    /* The empty constructor*/
+    /* The empty constructor
+     */
     GraphContainer();
 
     /* Returns a graph with n_vertices vertices, with an empty matching 
@@ -49,20 +50,23 @@ public:
 
     /* Receive an not oriented edge described through the vertices vertex1 and
      * vertex2 and add such edge on the graph. The duplicate edge will
-     * be descarted and the vertex1 must be different from vertex2.
+     * be discarded and the vertex1 must be different from vertex2.
+     * vertex2 will be added in graph[vertex1] list, if it is not already there, and vice versa.
+     * ( devo adicionar a alteração feita no grafo!!!!)
      **/
     void AddEdge(int vertex1, int vertex2);
 
-    /* Compute the parts of the bipartition of the current graph. If the graph is not
-     * bipartite, the program exits and print the message "The graph isn't bipartite".
+    /* Compute the parts of the bipartition of the current graph. Returns false if the graph is not
+     * bipartite. Returns true otherwise, and completes part field with an appropriate bipartition.
+     * It returns true if the graph is bipartite, end false otherwise.
      */
-    void ComputeBipartite();
+    bool ComputeBipartite(); // return bool describing whether the graph is bipartite.
 
     /* Find the maximum matching in the current graph, if already exist any
      * matching in the current GraphContainer struct, then this algorithm will use such mathing
-     * to find the maximum matching
+     * to find the maximum matching. Returns true if the mathing is perfect, returns false otherwise.
      */
-    void KuhnMunkres();
+    bool KuhnMunkres();
 
     /* Show the graph, the partition and the matchings.
      **/
@@ -83,8 +87,10 @@ public:
     bool PerfectMatching();
 
 private:
-    void BfsBipartite(int source, vector<bool> &setted);
+    bool BfsBipartite(int source, vector<bool> &setted);
     bool BfsAugmentPath(int source);
+    bool isBipartite;
+    bool bipartitionComputed;
 };
 
 #endif
