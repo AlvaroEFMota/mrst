@@ -1,7 +1,7 @@
 #include "InadmissibleEdges.hpp"
 
 void RemovalInadmissibleEdges(GraphContainer &G) {
-    vector<pair<int, int>> list = ListAllEdges(G);
+    vector<pair<int, int>> list = G.ListAllEdges();
     for (vector<pair<int, int>>::iterator i = list.begin(); i != list.end(); ++i) {
         GraphContainer G_tmp = G;
         vector<int> vertices;
@@ -15,23 +15,6 @@ void RemovalInadmissibleEdges(GraphContainer &G) {
             G.RemoveEdge((*i).first, (*i).second);
         }
     }
-}
-
-vector<pair<int,int>> ListAllEdges(GraphContainer &G) {
-    vector<pair<int,int>> list;
-    for (int i = 0; i < G.n_vert; ++i) {
-        for (vector<int>::iterator j = G.graph[i].begin(); j != G.graph[i].end(); ++j) {
-            if (i < (*j)) {
-                cout << i << " - " << (*j) << endl;
-                pair<int, int> edge;
-                edge.first = i;
-                edge.second = (*j);
-                list.push_back(edge);
-            }
-        }
-    }
-
-    return list;
 }
 
 vector<GraphContainer> ConnectedComponents(GraphContainer &G) {

@@ -11,25 +11,86 @@ vector<GraphContainer> TightCutReduction(GraphContainer &G) {
         G_tmp.IsolateVerteces(vertices2);
         G_tmp.KuhnMunkres();
         if (!G_tmp.PerfectMatching()){
-            cout << "tem corte justo " << "{" << (*pair_edge).first.first <<", " << (*pair_edge).first.second <<"}, {" << (*pair_edge).second.first << ", " << (*pair_edge).second.second << "}" << endl;
+            cout << "par de arestas do corte justo " << "{" << (*pair_edge).first.first <<", " << (*pair_edge).first.second <<"}, {" << (*pair_edge).second.first << ", " << (*pair_edge).second.second << "}" << endl;
             G_tmp.ShowGraph("tmp");
             vector<int> removed_vertices = {(*pair_edge).first.first,(*pair_edge).first.second,(*pair_edge).second.first,(*pair_edge).second.second};
             shores = FindShores(G_tmp, removed_vertices);
+            break;
         };
     }
-    for (vector<bool>::iterator i = shores.begin(); i != shores.end(); ++i) {
-        cout << (*i) << ", ";
-    }
-    cout << endl;
-    GraphContainer G_tmp = G;
-    vector<GraphContainer> l = {G_tmp};
-    return l;
+    /*for (int i = 0; i < shores.size(); ++i) {
+        cout << "Vertex: " << i << "  praia: "<<  shores[i] << endl;
+    }*/
+
+    vector<GraphContainer> contractions_graph = CContraction(G, shores);
+    return contractions_graph;
 }
 
+vector<GraphContainer> CContraction(GraphContainer &G, vector<bool> &shores) {
+    vector<GraphContainer> contractions_graph;
+    contractions_graph.push_back(GenerateShoreGraph(G, shores, true));
+    contractions_graph.push_back(GenerateShoreGraph(G, shores, false));
+    return contractions_graph;
+}
 
+GraphContainer GenerateShoreGraph(GraphContainer &G, vector<bool> &shores, bool shore_type){
+    int shore_len = 0;
+
+    for (vector<bool>::iterator i = shores.begin(); i != shores.end(); ++i) {
+        if (*i == shore_type)
+            shore_len++;
+    }
+
+    GraphContainer G_shore(shore_len+1);
+    int contracted_vertex = shore_len; // the last vertex of a graph with shore_len+1 vertices is shore_len vertex
+
+    vector<int> map(G.n_vert, -1);
+    int map_counter = 0;
+    for (int i = 0; i < shores.size(); ++i) {
+        if (shores[i] == shore_type) {
+            map[i] = map_counter;
+            map_counter++; 
+        }
+    }
+
+    vector<pair<int, int> > all_edges = G.ListAllEdges();
+    vector<pair<int, int> > shore_edges;
+    vector<pair<int, int> > cut_edges;
+
+    for (vector<pair<int, int> >::iterator edge = all_edges.begin(); edge != all_edges.end(); ++edge) {
+        if (shores[(*edge).first] == shore_type && shores[(*edge).second] == shore_type) {
+            shore_edges.push_back(*edge);
+            cout << "shore edge: {" << (*edge).first << ", " << (*edge).second << "}" << endl;
+        }
+        else if (shores[(*edge).first] == shore_type || shores[(*edge).second] == shore_type) {
+            cut_edges.push_back(*edge);
+            cout << "cut edge: {" << (*edge).first << ", " << (*edge).second << "}" << endl;
+        }
+    }
+
+    /*for (int i = 0; i < map.size(); ++i) {
+        cout << "map [" << i <<" -> "<< map[i] <<"]"<< endl;
+    }*/
+
+    for (vector<Edge>::iterator edge = shore_edges.begin(); edge != shore_edges.end(); ++edge) {
+        G_shore.AddEdge(map[(*edge).first], map[(*edge).second]);
+    }
+
+    for (vector<Edge>::iterator edge = cut_edges.begin(); edge != cut_edges.end(); ++edge) {
+        if (map[(*edge).first] == -1) {
+            G_shore.AddEdge(contracted_vertex, map[(*edge).second]);
+        } else {
+            G_shore.AddEdge(map[(*edge).first], contracted_vertex);
+        }
+    }
+    
+    //G_shore.ShowGraph("Shore graph");
+    
+    return G_shore;
+}
 
 vector<pair<pair<int,int>,pair<int,int>>> list_all_pair_of_edges_not_adjacent(GraphContainer &G) {
-    vector<pair<int,int> > edges_list = ListAllEdges(G);
+    vector<pair<int,int> > edges_list = G.ListAllEdges();
     vector<pair<pair<int, int>, pair<int, int> > > list_pair_edges;
     for (int i = 0; i < edges_list.size(); ++i) {
         for (int j = i+1; j < edges_list.size(); ++j) {
@@ -54,7 +115,7 @@ vector<bool> FindShores(GraphContainer &G, vector<int> removed_vertices) {
     bool found = false;
     int source = -1;
     for(int i = 0; i < G.n_vert && !found; ++i) {
-        if (G.matching[i] != -1) {
+        if (G.matching[i] == -1) {
             found = true;
             source = i;       
         }

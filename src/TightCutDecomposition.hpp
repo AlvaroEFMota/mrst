@@ -7,6 +7,7 @@
 vector<pair<pair<int,int>,pair<int,int>>> list_all_pair_of_edges_not_adjacent(GraphContainer &G);
 vector<GraphContainer> TightCutReduction(GraphContainer &G);
 vector<bool> FindShores(GraphContainer &G, vector<int> removed_vertices);
-vector<int> BfsFindShore(GraphContainer &G, int source);
-
+vector<int> BfsFindShore(GraphContainer &G, int source); // make it private
+vector<GraphContainer> CContraction(GraphContainer &G, vector<bool> &shores);
+GraphContainer GenerateShoreGraph(GraphContainer &G, vector<bool> &shores, bool shore);
 #endif

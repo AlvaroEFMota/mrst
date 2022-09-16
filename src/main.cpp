@@ -16,10 +16,12 @@ int main(int argc, char *argv[])
     
     G.ShowGraph("Initial Graph");
 
-    RemovalInadmissibleEdges(G);
-    G.ShowGraph("After the removal_inadmissible_edges");
+    //RemovalInadmissibleEdges(G);
+    //G.ShowGraph("After the removal_inadmissible_edges");
     
-    vector<GraphContainer> components_list = ConnectedComponents(G);
+    //vector<GraphContainer> components_list = ConnectedComponents(G);
+    vector<GraphContainer> components_list;
+    components_list.push_back(G);
 
     int count = 0;
     for (vector<GraphContainer>::iterator it = components_list.begin(); it != components_list.end(); ++it) {
@@ -29,7 +31,10 @@ int main(int argc, char *argv[])
         (*it).KuhnMunkres();
         (*it).ShowGraph(stream.str());
 
-        TightCutReduction((*it));
+        vector<GraphContainer> graphs = TightCutReduction((*it));
+        for (vector<GraphContainer>::iterator t = graphs.begin(); t != graphs.end(); t++) {
+            (*t).ShowGraph("shore");
+        }
     }
 
     return 0;

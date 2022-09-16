@@ -5,8 +5,11 @@
 #include <queue>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
+
+typedef pair<int, int> Edge;
 
 class GraphContainer
 {
@@ -85,6 +88,8 @@ public:
     /* Verify if the current matching is a perfect matching. Return true if yes and false if not
      */
     bool PerfectMatching();
+
+    vector<pair<int,int>> ListAllEdges();
 
 private:
     bool BfsBipartite(int source, vector<bool> &setted);
