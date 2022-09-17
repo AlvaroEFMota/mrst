@@ -297,7 +297,7 @@ vector<pair<int,int>> GraphContainer::ListAllEdges() {
     for (int i = 0; i < n_vert; ++i) {
         for (vector<int>::iterator j = graph[i].begin(); j != graph[i].end(); ++j) {
             if (i < (*j)) {
-                cout << i << " - " << (*j) << endl;
+                //cout << i << " - " << (*j) << endl;
                 pair<int, int> edge;
                 edge.first = i;
                 edge.second = (*j);
