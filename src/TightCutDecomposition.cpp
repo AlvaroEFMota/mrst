@@ -26,18 +26,24 @@ vector<GraphContainer> TightCutReduction(GraphContainer &G) {
         GraphContainer G_tmp = G;
         vector<int> vertices1 = {(*pair_edge).first.first,(*pair_edge).first.second};
         vector<int> vertices2 = {(*pair_edge).second.first,(*pair_edge).second.second};
+        G_tmp.ComputeBipartite();
         G_tmp.IsolateVerteces(vertices1);
         G_tmp.IsolateVerteces(vertices2);
         G_tmp.KuhnMunkres();
         if (!G_tmp.PerfectMatching()){
-            //cout << "par de arestas do corte justo " << "{" << (*pair_edge).first.first <<", " << (*pair_edge).first.second <<"}, {" << (*pair_edge).second.first << ", " << (*pair_edge).second.second << "}" << endl;
-            //G_tmp.ShowGraph("tmp");
+            cout << "par de arestas do corte justo " << "{" << (*pair_edge).first.first <<", " << (*pair_edge).first.second <<"}, {" << (*pair_edge).second.first << ", " << (*pair_edge).second.second << "}" << endl;
+            G_tmp.ShowGraph("tmp");
             vector<int> removed_vertices = {(*pair_edge).first.first,(*pair_edge).first.second,(*pair_edge).second.first,(*pair_edge).second.second};
             shores = FindShores(G_tmp, removed_vertices);
+            cout << "shores: ";
+            for(int shore = 0; shore < shores.size(); ++shore) {
+                cout << "[" << shore << ", " << shores[shore] << " ], ";
+            }
             contractions_graph = CContraction(G, shores);
             break;
         };
     }
+
     /*for (int i = 0; i < shores.size(); ++i) {
         cout << "Vertex: " << i << "  praia: "<<  shores[i] << endl;
     }*/
@@ -87,9 +93,9 @@ GraphContainer GenerateShoreGraph(GraphContainer &G, vector<bool> &shores, bool 
         }
     }
 
-    /*for (int i = 0; i < map.size(); ++i) {
+    for (int i = 0; i < map.size(); ++i) {
         cout << "map [" << i <<" -> "<< map[i] <<"]"<< endl;
-    }*/
+    }
 
     for (vector<Edge>::iterator edge = shore_edges.begin(); edge != shore_edges.end(); ++edge) {
         G_shore.AddEdge(map[(*edge).first], map[(*edge).second]);
