@@ -15,11 +15,6 @@ int main(int argc, char *argv[])
         //cout << "The graph is bipartite pfaffian!" << endl;
     }
     
-    
-
-    
-    
-    
 
     return 0;
 }

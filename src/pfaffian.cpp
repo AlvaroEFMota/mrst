@@ -1,48 +1,41 @@
 #include "pfaffian.hpp"
 
-bool BipartitePfaffianVerification(GraphContainer &G){
-
+int BipartitePfaffianVerification(const GraphContainer &G){
+    GraphContainer G_copy = G;
     /* Initial verification
-     *
+     * Check whether the input graph is bipartite and matching covered.
      */
-    InitialVerification(G);
+    if (!G_copy.ComputeBipartite()) {
+        cerr << "The input graph isn't bipartite!" << endl;
+        return NotBipartite;
+    }
+    
+    if (!G_copy.KuhnMunkres()) {
+        cerr << "The input graph has no perfect matching!" << endl;
+        return NotPerfectMatching;
+    }
 
     /* Removal of inadmissibleEdges
      *
      */
-    //RemovalInadmissibleEdges(G);
+    //GraphContainer matching_covered_graph = RemovalInadmissibleEdges(G);
     //G.ShowGraph("After the removal_inadmissible_edges");
-    //vector<GraphContainer> components_list = ConnectedComponents(G);
+    //vector<GraphContainer> matching_covered_components = FindConnectedComponents(matching_covered_graph);
 
-    // Should be removed
-    vector<GraphContainer> components_list;
-    components_list.push_back(G);
+    // The two lines below should be removed
+    vector<GraphContainer> matching_covered_components;
+    matching_covered_components.push_back(G_copy);
 
     /* Tight cut decoposition
      *
      */
-    vector<GraphContainer> braces = TightCutDecompositionFunction(components_list);
+    vector<GraphContainer> braces = DecomposeInTightCut(matching_covered_components);
 
     int count = 0;
     for (vector<GraphContainer>::iterator it = braces.begin(); it != braces.end(); ++it) {
         auto stream = std::stringstream{};
         stream << "Brace " << count++;
-        //(*it).ComputeBipartite();
-        //(*it).KuhnMunkres();
         (*it).ShowGraph(stream.str());
-
     }
-    return true;
-}
-
-void InitialVerification(GraphContainer &G) {
-    if (!G.ComputeBipartite()) {
-        cerr << "The input graph isn't bipartite!" << endl;
-        exit(0);
-    }
-    
-    if (!G.KuhnMunkres()) { // Create a unique function that use these functions of the blocks
-        cerr << "The input graph has no perfect matching!" << endl;
-        exit(0);
-    }
+    return IsPfaffian;
 }

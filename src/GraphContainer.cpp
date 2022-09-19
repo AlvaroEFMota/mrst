@@ -271,26 +271,26 @@ void GraphContainer::RemoveEdge(int v1, int v2)
 }
 
 void GraphContainer::IsolateVerteces(vector<int> verticesToIsolate) {
-    vector<pair<int, int> > edge_list;
+    vector<pair<int, int> > edges_for_removal;
     for (vector<int>::iterator i = verticesToIsolate.begin(); i != verticesToIsolate.end(); ++i) {
         for (vector<int>::iterator j = graph[*i].begin(); j != graph[*i].end(); ++j) {
              if (find(verticesToIsolate.begin(), verticesToIsolate.end(), (*j)) == verticesToIsolate.end()) { // use verticesToIsolate.find(*j) != verticesToIsolate.end(), remove 269--273
                 pair<int, int> edge(*i, *j);
-                edge_list.push_back(edge);
+                edges_for_removal.push_back(edge);
             }
 
         }
     }
 
-    for (vector<pair<int, int> >::iterator i = edge_list.begin(); i != edge_list.end(); ++i) {
+    for (vector<pair<int, int> >::iterator i = edges_for_removal.begin(); i != edges_for_removal.end(); ++i) {
         RemoveEdge((*i).first, (*i).second);
     }       
 }
 
-vector<pair<int,int>> GraphContainer::ListAllEdges() {
+vector<pair<int,int>> GraphContainer::ListAllEdges() const {
     vector<pair<int,int>> list;
     for (int i = 0; i < n_vert; ++i) {
-        for (vector<int>::iterator j = graph[i].begin(); j != graph[i].end(); ++j) {
+        for (vector<int>::const_iterator j = graph[i].begin(); j != graph[i].end(); ++j) {
             if (i < (*j)) {
                 //cout << i << " - " << (*j) << endl;
                 pair<int, int> edge;
