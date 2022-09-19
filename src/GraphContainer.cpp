@@ -274,16 +274,11 @@ void GraphContainer::IsolateVerteces(vector<int> verticesToIsolate) {
     vector<pair<int, int> > edge_list;
     for (vector<int>::iterator i = verticesToIsolate.begin(); i != verticesToIsolate.end(); ++i) {
         for (vector<int>::iterator j = graph[*i].begin(); j != graph[*i].end(); ++j) {
-            bool in = false;
-            for (vector<int>::iterator k = verticesToIsolate.begin(); k != verticesToIsolate.end(); ++k) {
-                if ((*j) == (*k)) {
-                    in = true;
-                }
-            }
-            if (!in) { // use verticesToIsolate.find(*j) != verticesToIsolate.end(), remove 269--273
+             if (find(verticesToIsolate.begin(), verticesToIsolate.end(), (*j)) == verticesToIsolate.end()) { // use verticesToIsolate.find(*j) != verticesToIsolate.end(), remove 269--273
                 pair<int, int> edge(*i, *j);
                 edge_list.push_back(edge);
             }
+
         }
     }
 
