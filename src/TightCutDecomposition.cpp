@@ -1,5 +1,68 @@
 #include "TightCutDecomposition.hpp"
 
+GraphContainer GenerateShoreGraph(const GraphContainer &G, vector<bool> &shores, bool shore_type){
+    int shore_len = 0;
+
+    for (vector<bool>::iterator i = shores.begin(); i != shores.end(); ++i) {
+        if (*i == shore_type)
+            shore_len++;
+    }
+
+    GraphContainer G_shore(shore_len+1);
+    int contracted_vertex = shore_len; // the last vertex of a graph with shore_len+1 vertices is shore_len vertex
+
+    vector<int> map(G.n_vert, -1);
+    int map_counter = 0;
+    for (int i = 0; i < shores.size(); ++i) {
+        if (shores[i] == shore_type) {
+            map[i] = map_counter;
+            map_counter++; 
+        }
+    }
+
+    vector<pair<int, int> > all_edges = G.ListAllEdges();
+    vector<pair<int, int> > shore_edges;
+    vector<pair<int, int> > cut_edges;
+
+    for (vector<pair<int, int> >::iterator edge = all_edges.begin(); edge != all_edges.end(); ++edge) {
+        int u = (*edge).first;
+        int w = (*edge).second;
+        if (shores[u] == shore_type && shores[w] == shore_type) {
+            shore_edges.push_back(*edge);
+            //cout << "shore edge: {" << (*edge).first << ", " << (*edge).second << "}" << endl;
+        }
+        else if (shores[u] == shore_type || shores[w] == shore_type) {
+            cut_edges.push_back(*edge);
+            //cout << "cut edge: {" << (*edge).first << ", " << (*edge).second << "}" << endl;
+        }
+    }
+
+    for (int i = 0; i < map.size(); ++i) {
+        cout << "map [" << i <<" -> "<< map[i] <<"]"<< endl;
+    }
+
+    for (vector<Edge>::iterator edge = shore_edges.begin(); edge != shore_edges.end(); ++edge) {
+        G_shore.AddEdge(map[(*edge).first], map[(*edge).second]);
+    }
+
+    for (vector<Edge>::iterator edge = cut_edges.begin(); edge != cut_edges.end(); ++edge) {
+        if (map[(*edge).first] == -1) {
+            G_shore.AddEdge(contracted_vertex, map[(*edge).second]);
+        } else {
+            G_shore.AddEdge(map[(*edge).first], contracted_vertex);
+        }
+    }
+    
+    return G_shore;
+}
+
+vector<GraphContainer> CContraction(const GraphContainer &G, vector<bool> &shores) {
+    vector<GraphContainer> contractions_graph;
+    contractions_graph.push_back(GenerateShoreGraph(G, shores, true));
+    contractions_graph.push_back(GenerateShoreGraph(G, shores, false));
+    return contractions_graph;
+}
+
 // Describe that this functions is callable only for GraphContainer having a maximum matching.
 vector<int> BfsFindShore(const GraphContainer &G, int source) {
     vector<int> shore_vec;
@@ -80,80 +143,6 @@ vector<bool> FindShores(const GraphContainer &G, vector<int> removed_vertices) {
     return shores;
 }
 
-GraphContainer GenerateShoreGraph(const GraphContainer &G, vector<bool> &shores, bool shore_type){
-    int shore_len = 0;
-
-    for (vector<bool>::iterator i = shores.begin(); i != shores.end(); ++i) {
-        if (*i == shore_type)
-            shore_len++;
-    }
-
-    GraphContainer G_shore(shore_len+1);
-    int contracted_vertex = shore_len; // the last vertex of a graph with shore_len+1 vertices is shore_len vertex
-
-    vector<int> map(G.n_vert, -1);
-    int map_counter = 0;
-    for (int i = 0; i < shores.size(); ++i) {
-        if (shores[i] == shore_type) {
-            map[i] = map_counter;
-            map_counter++; 
-        }
-    }
-
-    vector<pair<int, int> > all_edges = G.ListAllEdges();
-    vector<pair<int, int> > shore_edges;
-    vector<pair<int, int> > cut_edges;
-
-    for (vector<pair<int, int> >::iterator edge = all_edges.begin(); edge != all_edges.end(); ++edge) {
-        int u = (*edge).first;
-        int w = (*edge).second;
-        if (shores[u] == shore_type && shores[w] == shore_type) {
-            shore_edges.push_back(*edge);
-            //cout << "shore edge: {" << (*edge).first << ", " << (*edge).second << "}" << endl;
-        }
-        else if (shores[u] == shore_type || shores[w] == shore_type) {
-            cut_edges.push_back(*edge);
-            //cout << "cut edge: {" << (*edge).first << ", " << (*edge).second << "}" << endl;
-        }
-    }
-
-    for (int i = 0; i < map.size(); ++i) {
-        cout << "map [" << i <<" -> "<< map[i] <<"]"<< endl;
-    }
-
-    for (vector<Edge>::iterator edge = shore_edges.begin(); edge != shore_edges.end(); ++edge) {
-        G_shore.AddEdge(map[(*edge).first], map[(*edge).second]);
-    }
-
-    for (vector<Edge>::iterator edge = cut_edges.begin(); edge != cut_edges.end(); ++edge) {
-        if (map[(*edge).first] == -1) {
-            G_shore.AddEdge(contracted_vertex, map[(*edge).second]);
-        } else {
-            G_shore.AddEdge(map[(*edge).first], contracted_vertex);
-        }
-    }
-    
-    return G_shore;
-}
-
-vector<GraphContainer> DecomposeInTightCut(const vector<GraphContainer> &matching_covered_graphs) {
-    vector<GraphContainer> matching_covered_graphs_copy = matching_covered_graphs;
-    vector<GraphContainer> final_list;
-    while (matching_covered_graphs_copy.size() != 0) {
-        GraphContainer G = matching_covered_graphs_copy.back();
-        matching_covered_graphs_copy.pop_back();
-        vector<GraphContainer> c_contractions = TightCutReduction(G);
-        if (c_contractions.size() != 0) {
-            for(vector<GraphContainer>::iterator graph = c_contractions.begin(); graph != c_contractions.end(); ++graph) {
-                matching_covered_graphs_copy.push_back(*graph);
-            }
-        } else {
-            final_list.push_back(G);
-        }
-    }
-    return final_list;
-}
-
 vector<GraphContainer> TightCutReduction(const GraphContainer &G) {
     vector<GraphContainer> contractions_graph;
     vector<pair<pair<int,int>,pair<int,int>>> pair_edges = list_all_pair_of_edges_not_adjacent(G);
@@ -187,30 +176,20 @@ vector<GraphContainer> TightCutReduction(const GraphContainer &G) {
     return contractions_graph;
 }
 
-vector<GraphContainer> CContraction(const GraphContainer &G, vector<bool> &shores) {
-    vector<GraphContainer> contractions_graph;
-    contractions_graph.push_back(GenerateShoreGraph(G, shores, true));
-    contractions_graph.push_back(GenerateShoreGraph(G, shores, false));
-    return contractions_graph;
-}
-
-vector<pair<pair<int,int>,pair<int,int>>> list_all_pair_of_edges_not_adjacent(const GraphContainer &G) {
-    vector<pair<int,int> > edges_list = G.ListAllEdges();
-    vector<pair<pair<int, int>, pair<int, int> > > list_pair_edges;
-    for (int i = 0; i < edges_list.size(); ++i) {
-        for (int j = i+1; j < edges_list.size(); ++j) {
-            if(edges_list[i].first != edges_list[j].first &&
-                edges_list[i].first != edges_list[j].second &&
-                edges_list[i].second != edges_list[j].first &&
-                edges_list[i].second != edges_list[j].second) {
-                list_pair_edges.push_back(make_pair(edges_list[i], edges_list[j]));
+vector<GraphContainer> DecomposeInTightCuts(const vector<GraphContainer> &matching_covered_graphs) {
+    vector<GraphContainer> matching_covered_graphs_copy = matching_covered_graphs;
+    vector<GraphContainer> final_list;
+    while (matching_covered_graphs_copy.size() != 0) {
+        GraphContainer G = matching_covered_graphs_copy.back();
+        matching_covered_graphs_copy.pop_back();
+        vector<GraphContainer> c_contractions = TightCutReduction(G);
+        if (c_contractions.size() != 0) {
+            for(vector<GraphContainer>::iterator graph = c_contractions.begin(); graph != c_contractions.end(); ++graph) {
+                matching_covered_graphs_copy.push_back(*graph);
             }
+        } else {
+            final_list.push_back(G);
         }
     }
-
-    /*for (vector<pair<pair<int, int>, pair<int, int> > >:: iterator it = list_pair_edges.begin(); it != list_pair_edges.end(); ++it) {
-        cout << "[{" << (*it).first.first << ", " << (*it).first.second << "}, {" << (*it).second.first << ", " << (*it).second.second <<"}]" << endl;
-    }*/
-
-    return list_pair_edges;
+    return final_list;
 }

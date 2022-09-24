@@ -29,7 +29,7 @@ int BipartitePfaffianVerification(const GraphContainer &G){
     /* Tight cut decoposition
      *
      */
-    vector<GraphContainer> braces = DecomposeInTightCut(matching_covered_components);
+    vector<GraphContainer> braces = DecomposeInTightCuts(matching_covered_components);
 
     int count = 0;
     for (vector<GraphContainer>::iterator it = braces.begin(); it != braces.end(); ++it) {

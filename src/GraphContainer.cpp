@@ -18,8 +18,12 @@ GraphContainer::GraphContainer(int size) {
     graph.resize(size);
     part.resize(size, false);
     matching.resize(size, -1);
+    map.resize(size, -1);
+    isMapped = false;
     n_vert = size;
     matc_size = 0;
+    bipartitionComputed = false;
+    isBipartite = false;
     
 }
 
@@ -64,10 +68,15 @@ bool GraphContainer::ComputeBipartite()
         if (setted[source] == false)
         {
             if (!BfsBipartite(source, setted)) {
+                isBipartite = false;
+                bipartitionComputed = true;
                 return false;
             }
         }
     }
+
+    isBipartite = true;
+    bipartitionComputed = true;
     return true;
     // delete setted
 }

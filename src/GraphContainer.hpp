@@ -13,12 +13,19 @@ typedef pair<int, int> Edge;
 
 class GraphContainer
 {
+private:
+    bool BfsBipartite(int source, vector<bool> &setted);
+    bool BfsAugmentPath(int source);
+    bool isBipartite;
 public:
     vector<vector<int>> graph; // graph[v] has the list of neighbours of v
     vector<bool> part; // part[v]= which part of the bipartition of G vertex v is in
     vector<int> matching; // matching[v]=u if and only if (u,v) is in M. Otherwise, when v is unmatched, matching[v]=-1
     int n_vert;    // number of verteces
     int matc_size; // size of the matching
+    bool bipartitionComputed;
+    vector<int> map; // used to map old vertex indexes to new vertex indexes
+    bool isMapped;
 
     /* The empty constructor
      */
@@ -90,12 +97,6 @@ public:
     bool PerfectMatching(); // change name to HasPerfectMatching. Use Kuhn Munkres algorithm inside it
 
     vector<pair<int,int>> ListAllEdges() const ;
-
-private:
-    bool BfsBipartite(int source, vector<bool> &setted);
-    bool BfsAugmentPath(int source);
-    bool isBipartite;
-    bool bipartitionComputed;
 };
 
 #endif
