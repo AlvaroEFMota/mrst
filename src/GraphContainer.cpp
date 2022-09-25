@@ -312,3 +312,61 @@ vector<pair<int,int>> GraphContainer::ListAllEdges() const {
 
     return list;
 }
+
+void GraphContainer::RemoveVertex(int v) {
+    // deleting vertex v
+    // remove v from neighbohood of others verteces
+    for (vector<vector<int>>::iterator i = graph.begin(); i != graph.end(); ++i) {
+        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j) {
+            if (*j == v){
+                (*i).erase(j);
+                break;
+            }
+        }
+    }
+    // erase v from graph (hence the verteces will be shifted)
+    graph.erase(std::next(graph.begin(),v));
+
+    // subtract 1 from adjacent verteces who is greater than v
+    for (vector<vector<int>>::iterator i = graph.begin(); i != graph.end(); ++i) {
+        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j) {
+            if (*j > v){
+                *j-=1;
+            }
+        }
+    }
+
+    // shifting the color array
+    for (int i = v; i < n_vert-1; ++i) {
+        part[i] = part[i+1];
+    }
+
+    // fixing the matching
+    if (matching[v] != -1) {
+
+        for (int i = 0; i < n_vert; ++i) {
+            if (matching[i] == v){
+                matching[i] = -1;
+            }
+            if (matching[i] > v){
+                matching[i] -= 1;
+            }
+        }
+        matching[v] = -1;
+    }
+
+    // shifting the matching
+    for (int i = v; i < n_vert-1; ++i) {
+        matching[i] = matching[i+1];
+    }
+
+    // resizing the lenght
+    n_vert -= 1;
+};
+
+void GraphContainer::RemoveVertices(vector<int> vertices) {
+    sort(vertices.begin(), vertices.end(), greater<int>());
+    for( vector<int>::iterator i = vertices.begin(); i != vertices.end(); ++i) {
+        RemoveVertex((*i));
+    }
+};

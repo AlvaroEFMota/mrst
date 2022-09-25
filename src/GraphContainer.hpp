@@ -17,6 +17,7 @@ private:
     bool BfsBipartite(int source, vector<bool> &setted);
     bool BfsAugmentPath(int source);
     bool isBipartite;
+    void RemoveVertex(int v);
 public:
     vector<vector<int>> graph; // graph[v] has the list of neighbours of v
     vector<bool> part; // part[v]= which part of the bipartition of G vertex v is in
@@ -97,6 +98,8 @@ public:
     bool PerfectMatching(); // change name to HasPerfectMatching. Use Kuhn Munkres algorithm inside it
 
     vector<pair<int,int>> ListAllEdges() const ;
+
+    void RemoveVertices(vector<int> vertices);
 };
 
 #endif

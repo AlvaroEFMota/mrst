@@ -27,18 +27,17 @@ int BoolToInt(bool value) {
     return 0;
 }
 
-vector<vector<int> > list_all_quadrilaterals(const GraphContainer &G) {
+vector<vector<int> > list_all_3_vertices_of_quadrilaterals(const GraphContainer &G) {
     assert(G.bipartitionComputed);
-    vector<vector<int>> all_quadrilaterials;
+    vector<vector<int>> all_3_vertices_of_quadrilaterials;
 
     for(int i = 0; i < G.n_vert; ++i) {
         for(int j = i+1; j < G.n_vert; ++j) {
             for(int k = j+1; k < G.n_vert; ++k) {
-                for(int l = k+1; l < G.n_vert; ++l) {
-                    if(BoolToInt(G.part[i])+BoolToInt(G.part[i])+BoolToInt(G.part[i])+BoolToInt(G.part[i]) == 2){
-                        vector<int> quadrilateral{i,j,k,l};
-                        all_quadrilaterials.push_back(quadrilateral);
-                    }
+                int sum = BoolToInt(G.part[i])+BoolToInt(G.part[j])+BoolToInt(G.part[k]);
+                if(sum == 1 || sum == 2) {
+                    vector<int> vertices = {i,j,k};
+                    all_3_vertices_of_quadrilaterials.push_back(vertices);
                 }
             }
         }
