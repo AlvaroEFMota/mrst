@@ -20,8 +20,25 @@ vector<vector<int >> list_all_3_vertices_of_quadrilaterals(const GraphContainer 
     return list_of_3_vertices;
 }
 
+vector<vector<int> > find_quadrilaterals(const Graphcontainer &G, vector<vector<int> > _3_vertices) {
+    GraphContainer G_new = G;
+    vector<vector<int> > quadrilaterals;
+    G_new.RemoveVertices(_3_vertices);
+    vector<int> cut_vertices = find_cut_vertices(G_new);
+    for(vector<int>::iterator i = cut_vertices.begin(); i != cut_vertices.end(); ++i) {
+        if(Bool2Int(G.part[_3_vertices[0]]) + Bool2Int(G.part[_3_vertices[0]]) + Bool2Int(G.part[_3_vertices[0]]) + Bool2Int(G.part[i]) == 2) {
+            vector<int> qualdrilateral = *i;
+            qualdrilateral.push_back(*i);
+            quadrilaterals.push_back(qualdrilateral);
+        }
+    }
+    return quadrilaterals;
+}
+
 vector<vector<int> > list_all_quadrilaterals(vector<vector<int>> list_of_3_vertices) {
-    
+    for(vector<vector> >::iterator it = list_of_3_vertices.begin; it != list_of_3_vertices.end(); ++it) {
+        find_quadrilaterals()
+    }
 }
 
 vector<vector<int>> find_quadrilaterals(const GraphContainer &G, vector<int> vertices_of_quadrilaterals) {
@@ -55,9 +72,16 @@ vector<GraphContainer> DecomposeInFourSum(const GraphContainer &G) {
     vector<GraphContainer> final_components_list;
     if (!G.bipartitionComputed)
         G.ComputeBipartite();
-
-    vector<vector<int> > all_quadrilateral = find_all_quadrilaterals(G);
+s
+    vector<vector<int> > all_quadrilaterals = find_all_quadrilaterals(G);
     
+    for(vector<vector<int> >::iterator i = all_quadrilaterals.begin(); i != all_quadrilaterals.end(); ++i) {
+        for(vector<int>::iterator j = i->begin(); j != i->end(); ++j) {
+            cout << (*j) << ' ' <<;
+        }
+        cout << endl;
+    }
+
     /*components.push_back(G);
     while(!components.empty()) {
         GraphContainer G_tmp = components.back();

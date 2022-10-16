@@ -4,5 +4,6 @@
 #include "GraphContainer.hpp"
 #include "utils.hpp"
 
+vector<GraphContainer> DecomposeInFourSum(const GraphContainer &G);
 
 #endif
