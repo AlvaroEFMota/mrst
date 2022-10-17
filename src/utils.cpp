@@ -34,11 +34,12 @@ vector<vector<int >> list_all_3_vertices_of_quadrilaterals(const GraphContainer 
             for (int k = j + 1; k < G.n_vert; ++k) {
                 int part_value = BoolToInt[G.part[i]] + BoolToInt[G.part[j]] + BoolToInt[G.part[k]];
                 if (part_value == 2 || part_value == 1) {
-                    vector<int> vertices{ i, j, k};
+                    vector<int> vertices{i, j, k};
                     list_of_3_vertices.push_back(vertices);
                 }
             }
         }
     }
+
     return list_of_3_vertices;
 }
