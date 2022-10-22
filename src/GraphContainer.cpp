@@ -52,6 +52,33 @@ void GraphContainer::GraphInitFromStdin()
     }
 }
 
+void GraphContainer::GraphInitFromFile(string file_path)
+{
+    ifstream infile;
+    infile.open(file_path);
+    int num_vertices, num_edges;
+    infile >> num_vertices >> num_edges;
+
+    if (num_vertices % 2 != 0)
+    {
+        cout << "The graph G is pfaffian by emptiness" << endl;
+        exit(0);
+    }
+
+    graph.resize(num_vertices);
+    part.resize(num_vertices, false);
+    matching.resize(num_vertices, -1);
+    n_vert = num_vertices;
+    matc_size = 0;
+
+    for (int i = 0; i < num_edges; ++i)
+    {
+        int vertex1, vertex2;
+        infile >> vertex1 >> vertex2;
+        AddEdge(vertex1, vertex2);
+    }
+}
+
 void GraphContainer::AddEdge(int vertex1, int vertex2)
 {
     graph[vertex1].push_back(vertex2);
@@ -219,14 +246,13 @@ bool GraphContainer::BfsAugmentPath(int source)
     return target != -1;
 }
 
-void GraphContainer::ShowGraph(string graph_desc)
-{
+void GraphContainer::ShowGraph(string graph_desc) const {
     int count = 0;
     cout << "----- " << graph_desc << " -----" << endl;
-    for (vector<vector<int>>::iterator i = graph.begin(); i != graph.end(); ++i)
+    for (vector<vector<int>>::const_iterator i = graph.begin(); i != graph.end(); ++i)
     {
         cout << count++ << ": ";
-        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j)
+        for (vector<int>::const_iterator j = (*i).begin(); j != (*i).end(); ++j)
         {
             cout << *j << " ";
         }

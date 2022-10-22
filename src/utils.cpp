@@ -1,7 +1,7 @@
 #include "utils.hpp"
 
-vector<pair<pair<int,int>,pair<int,int>>> list_all_pair_of_edges_not_adjacent(const GraphContainer &G) {
-    vector<pair<int,int> > edges_list = G.ListAllEdges();
+vector<pair<pair<int,int>,pair<int,int>>> list_all_pair_of_edges_not_adjacent(const GraphContainer &G_const) {
+    vector<pair<int,int> > edges_list = G_const.ListAllEdges();
     vector<pair<pair<int, int>, pair<int, int> > > list_pair_edges;
     for (int i = 0; i < edges_list.size(); ++i) {
         for (int j = i+1; j < edges_list.size(); ++j) {
@@ -27,14 +27,15 @@ int BoolToInt(bool value) {
     return 0;
 }
 
-vector<vector<int> > list_all_3_vertices_of_quadrilaterals(const GraphContainer &G) {
-    assert(G.bipartitionComputed);
+vector<vector<int> > list_all_3_vertices_of_quadrilaterals(const GraphContainer &G_const) {
+    assert(G_const.bipartitionComputed);
+
     vector<vector<int>> all_3_vertices_of_quadrilaterials;
 
-    for(int i = 0; i < G.n_vert; ++i) {
-        for(int j = i+1; j < G.n_vert; ++j) {
-            for(int k = j+1; k < G.n_vert; ++k) {
-                int sum = BoolToInt(G.part[i])+BoolToInt(G.part[j])+BoolToInt(G.part[k]);
+    for(int i = 0; i < G_const.n_vert; ++i) {
+        for(int j = i+1; j < G_const.n_vert; ++j) {
+            for(int k = j+1; k < G_const.n_vert; ++k) {
+                int sum = BoolToInt(G_const.part[i])+BoolToInt(G_const.part[j])+BoolToInt(G_const.part[k]);
                 if(sum == 1 || sum == 2) {
                     vector<int> vertices = {i,j,k};
                     all_3_vertices_of_quadrilaterials.push_back(vertices);
@@ -43,5 +44,5 @@ vector<vector<int> > list_all_3_vertices_of_quadrilaterals(const GraphContainer 
         }
     }
 
-    return all_quadrilaterials;
+    return all_3_vertices_of_quadrilaterials;
 }

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -59,6 +60,11 @@ public:
      */
     void GraphInitFromStdin();
 
+    /* The graph description in the file must follow the GraphInitFormStdin() description
+     *
+     */
+    void GraphInitFromFile(string file_path);
+
     /* Receive an not oriented edge described through the vertices vertex1 and
      * vertex2 and add such edge on the graph. The duplicate edge will
      * be discarded and the vertex1 must be different from vertex2.
@@ -81,7 +87,7 @@ public:
 
     /* Show the graph, the partition and the matchings.
      **/
-    void ShowGraph(string graph_desc);
+    void ShowGraph(string graph_desc) const ;
 
     /* Remove an edge of the current graph. Tt removes the edges (v1,v2) and (v2,v1), if the
      * vertices v1 and v2 are matched, the matching[v1] and matching[v2] will be setted to -1,
@@ -101,5 +107,6 @@ public:
 
     void RemoveVertices(vector<int> vertices);
 };
+
 
 #endif
