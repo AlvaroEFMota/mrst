@@ -46,3 +46,44 @@ vector<vector<int> > list_all_3_vertices_of_quadrilaterals(const GraphContainer 
 
     return all_3_vertices_of_quadrilaterials;
 }
+
+void dfs_digraph_generation_rec(const GraphContainer &G_const, vector<vector<int> > &digraph, int vertex, vector<int> &color, vector<int> &successor) {
+    color[vertex] = 1;
+    for(vector<int>::const_iterator i = G_const.graph[vertex].begin(); i != G_const.graph[vertex].end(); ++i) {
+        if (color[*i] == 0) {
+            cout << "Entrou em " << *i <<" Add " << vertex << "->" << *i << endl;
+            color[*i] = 1;
+            successor[vertex] = *i;
+            digraph[vertex].push_back(*i);
+            dfs_digraph_generation_rec(G_const, digraph, *i, color, successor);
+
+        } else if (color[*i] == 1) {
+            if(vertex != successor[*i]) {
+                cout << "Em " << vertex << " foi encontrado o vértice cinza " << *i << " Adicionando " << vertex <<"->"<< successor[*i] << endl;
+                digraph[vertex].push_back(successor[*i]);
+            }
+        }
+    } 
+    color[vertex] = 2;
+}
+
+void dfs_digraph_generation(const GraphContainer G_const, int source) {
+    vector<vector<int> > digraph(G_const.n_vert);
+    // 0 = white, 1 = gray, 2 = black
+    vector<int> color(G_const.n_vert, 0);
+    vector<int> successor(G_const.n_vert, -1);
+    dfs_digraph_generation_rec(G_const, digraph, 0, color, successor);
+
+    for(int i = 0; i < digraph.size(); ++i) {
+        cout << i << ": ";
+        for(vector<int>::iterator j = digraph[i].begin(); j != digraph[i].end(); ++j){
+            cout << *j << " ";
+        }
+        cout << endl;
+    }
+    
+}
+
+void xyz(const GraphContainer &G_const) {
+    dfs_digraph_generation(G_const, 0);
+}
