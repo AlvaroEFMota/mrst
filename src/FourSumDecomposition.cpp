@@ -5,24 +5,46 @@
 }
 */
 
-vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<int> the_3_vertices_of_quadrilaterals) {
-    assert(the_3_vertices_of_quadrilaterals.size() == 3);
+vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<int> the_3_vertices_2_white_1_black) {
+    assert(the_3_vertices_2_white_1_black.size() == 3);
 
     GraphContainer G = G_const;
-    G.ShowGraph("Before removel");
-    cout << "Quad " << the_3_vertices_of_quadrilaterals[0] << " " << the_3_vertices_of_quadrilaterals[1] << " " << the_3_vertices_of_quadrilaterals[2] << endl;
+    G.ShowGraph("Before removal");
+
+    // Fazer um mapeamento de ida e volta antes da remoção
+
     G.RemoveVertices(the_3_vertices_of_quadrilaterals);
     G.ShowGraph("Finding Quadrilaterals");
-    exit(0);
+    //vector<int> cut_vertices = list_cut_vertices(G);
+    // Converter cut_vertices para o cut_vertices_mapped
+    
+    vector<vector<int> > quadrilaterals;
 
+    for(vector<int>::iterator i = cut_vertices.begin(); i != cut_vertices.end(); ++i) {
+        vector<int> possible_quadrilateral = the_3_vertices_2_white_1_black;
+        possible_quadrilateral.push_back(*i);
+
+        int n_white = 0;
+        for(vector<int>::iterator j = possible_quadrilateral.begin(); j != possible_quadrilateral.end(); ++j) {
+            if(G_const.part[*j]) {
+                n_white++;
+            }
+        }
+
+        if(n_white == 2) {
+            quadrilaterals.push_back(possible_quadrilateral);
+        }
+    }
+
+    return quadrilaterals;
 }
 
 vector<vector<int>> find_all_quadrilaterals(const GraphContainer &G_const) {
     assert(G_const.bipartitionComputed);
     
-    vector<vector<int> > all_3_vertices_of_quadrilaterals = list_all_3_vertices_of_quadrilaterals(G_const);
+    vector<vector<int> > all_3_vertices_2_white_1_black = list_all_3_vertices_2_white_1_black(G_const);
     vector<vector<int> > all_quadrilaterals;
-    for(vector<vector<int> >::iterator i = all_3_vertices_of_quadrilaterals.begin(); i != all_3_vertices_of_quadrilaterals.end(); ++i) {
+    for(vector<vector<int> >::iterator i = all_3_vertices_2_white_1_black.begin(); i != all_3_vertices_2_white_1_black.end(); ++i) {
         vector<vector<int>> quadrilaterals = find_quadrilaterals(G_const, (*i));
         /*if (quadrilaterals.size() != 0) {
             for(vector<vector<int> >:iterator j = quadrilaterals.begin(); j != quadrilaterals.end(); ++j ) {
@@ -30,6 +52,8 @@ vector<vector<int>> find_all_quadrilaterals(const GraphContainer &G_const) {
             }
         }*/
     }
+
+    //for()
 
     return all_quadrilaterals;
 }

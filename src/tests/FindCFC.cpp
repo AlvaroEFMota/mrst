@@ -8,5 +8,11 @@ int main() {
     GraphContainer G;
     G.GraphInitFromFile("src/tests/inputs/find_cfc.in");
     G.ShowGraph("Finding CFC");
+
+    /* Testing digraph generation
+     */
+    dfs_digraph_generation(G, 0);
+    cout << "#################################### [OK] Digraph generation " << endl;
+
     xyz(G);
 }

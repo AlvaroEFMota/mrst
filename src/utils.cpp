@@ -27,24 +27,29 @@ int BoolToInt(bool value) {
     return 0;
 }
 
-vector<vector<int> > list_all_3_vertices_of_quadrilaterals(const GraphContainer &G_const) {
+vector<vector<int> > list_all_3_vertices_2_white_1_black(const GraphContainer &G_const) {
     assert(G_const.bipartitionComputed);
 
-    vector<vector<int>> all_3_vertices_of_quadrilaterials;
+    vector<vector<int>> all_3_vertices_2_white_1_black;
 
     for(int i = 0; i < G_const.n_vert; ++i) {
-        for(int j = i+1; j < G_const.n_vert; ++j) {
-            for(int k = j+1; k < G_const.n_vert; ++k) {
-                int sum = BoolToInt(G_const.part[i])+BoolToInt(G_const.part[j])+BoolToInt(G_const.part[k]);
-                if(sum == 1 || sum == 2) {
-                    vector<int> vertices = {i,j,k};
-                    all_3_vertices_of_quadrilaterials.push_back(vertices);
+        if(G_const.part[i]) {
+
+            for(int j = i+1; j < G_const.n_vert; ++j) {
+                if(G_const.part[j]) {
+
+                    for(int k = 0; k < G_const.n_vert; ++k) {
+                        if(!G_const.part[k]) {
+                            vector<int> vertices = {i, j, k};
+                            all_3_vertices_2_white_1_black.push_back(vertices);
+                        }
+                    }
                 }
             }
         }
     }
 
-    return all_3_vertices_of_quadrilaterials;
+    return all_3_vertices_2_white_1_black;
 }
 
 void dfs_digraph_generation_rec(const GraphContainer &G_const, vector<vector<int> > &digraph, int vertex, vector<int> &color, vector<int> &successor) {
