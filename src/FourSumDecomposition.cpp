@@ -4,20 +4,33 @@
     //check the map and the quadrilateral
 }
 */
-void dfs_compute_end_time(GraphContainer &G, int source, vector<int> &end_time, int &end_time_counter) {
-    for(vector<int>::iterator it = G.graph[source]; it != G.graph[source].end(); ++it) {
-        dfs_compute_end_time(G, *it, end_time, end_time_counter);
-    }
-    end_time[source] = end_time_counter;
+
+bool sort_end_time_descendent_compare(pair<int,int> p1, pair<int,int> p2) {
+    return p1.second > p2.second;
 }
 
-vector<int> list_cut_vertices(const GraphContainer &G_const) {
-    GraphContainer G = G_const;
+void dfs_compute_end_time(const GraphContainer &G, int source, vector<pair<int,int>> &end_time, int &end_time_counter, vector<int> &color) {
+    for(vector<int>::const_iterator it = G.graph[source].begin(); it != G.graph[source].end(); ++it) {
+        if (color[*it] == 0) {
+            color[*it] = 1;
+            dfs_compute_end_time(G, *it, end_time, end_time_counter, color);
+        }
+    }
+    end_time.push_back(make_pair(source, end_time_counter));
+    color[source] = 2;
+    end_time_counter++;
+}
+
+vector<int> list_cut_vertices(const GraphContainer &G) {
     vector<int> cut_vertices;
-    vector<int> end_time(G.n_vert, -1, 0);
+    vector<pair<int,int>> end_time;
+    vector<int> color(G.n_vert, 0);
     int end_time_counter = 0;
     //Computing end time
-    dfs_compute_end_time(G, 0, end_time, end_time_counter);
+    dfs_compute_end_time(G, 0, end_time, end_time_counter, color);
+    sort(end_time.begin(), end_time.end(), sort_end_time_descendent_compare);
+    for (auto i: end_time)
+        cout << i.first << "--" << i.second << endl;
     return cut_vertices;
 }
 
@@ -38,34 +51,38 @@ vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<in
     for(int i = 0; i < map.size(); ++i) {
         cout << i << "-->" << map[i] << endl;
     }
-
-    G.ShowGraph("Finding Quadrilaterals");
-    vector<int> cut_vertices = list_cut_vertices(G);
-    vector<int> cut_vertices_mapped(cut_vertices.size(), 0);
-
-    for(int i = 0; i < cut_vertices.size(); ++i) {
-        cut_vertices_mapped[i] = map[cut_vertices[i]];
-    }
-    // Converter cut_vertices para o cut_vertices_mapped
-    
+    vector<GraphContainer> components = FindConnectedComponents(G);
     vector<vector<int> > quadrilaterals;
-    /*
-    for(vector<int>::iterator i = cut_vertices.begin(); i != cut_vertices.end(); ++i) {
-        vector<int> possible_quadrilateral = the_3_vertices_2_white_1_black;
-        possible_quadrilateral.push_back(*i);
 
-        int n_white = 0;
-        for(vector<int>::iterator j = possible_quadrilateral.begin(); j != possible_quadrilateral.end(); ++j) {
-            if(G_const.part[*j]) {
-                n_white++;
+    if (components.size() == 1) {
+        G.ShowGraph("Finding Quadrilaterals");
+        vector<int> cut_vertices = list_cut_vertices(G);
+        vector<int> cut_vertices_mapped(cut_vertices.size(), 0);
+
+        for(int i = 0; i < cut_vertices.size(); ++i) {
+            cut_vertices_mapped[i] = map[cut_vertices[i]];
+        }
+        exit(0);
+        // Converter cut_vertices para o cut_vertices_mapped
+        
+        /*
+        for(vector<int>::iterator i = cut_vertices.begin(); i != cut_vertices.end(); ++i) {
+            vector<int> possible_quadrilateral = the_3_vertices_2_white_1_black;
+            possible_quadrilateral.push_back(*i);
+
+            int n_white = 0;
+            for(vector<int>::iterator j = possible_quadrilateral.begin(); j != possible_quadrilateral.end(); ++j) {
+                if(G_const.part[*j]) {
+                    n_white++;
+                }
             }
-        }
 
-        if(n_white == 2) {
-            quadrilaterals.push_back(possible_quadrilateral); //possible quadrilateral turns into a quadrilateral
-        }
+            if(n_white == 2) {
+                quadrilaterals.push_back(possible_quadrilateral); //possible quadrilateral turns into a quadrilateral
+            }
+        } */
     }
-*/
+
     return quadrilaterals;
 }
 
