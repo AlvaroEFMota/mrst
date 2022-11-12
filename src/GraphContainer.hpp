@@ -105,7 +105,10 @@ public:
 
     vector<pair<int,int>> ListAllEdges() const ;
 
-    void RemoveVertices(vector<int> vertices);
+    /* Remove an vector of vertices from the graph. Returns a
+     * map of vertices mapping the current on the previous vertex label.
+     */
+    vector<int> RemoveVertices(vector<int> vertices);
 };
 
 

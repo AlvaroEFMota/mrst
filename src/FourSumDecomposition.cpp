@@ -4,6 +4,22 @@
     //check the map and the quadrilateral
 }
 */
+void dfs_compute_end_time(GraphContainer &G, int source, vector<int> &end_time, int &end_time_counter) {
+    for(vector<int>::iterator it = G.graph[source]; it != G.graph[source].end(); ++it) {
+        dfs_compute_end_time(G, *it, end_time, end_time_counter);
+    }
+    end_time[source] = end_time_counter;
+}
+
+vector<int> list_cut_vertices(const GraphContainer &G_const) {
+    GraphContainer G = G_const;
+    vector<int> cut_vertices;
+    vector<int> end_time(G.n_vert, -1, 0);
+    int end_time_counter = 0;
+    //Computing end time
+    dfs_compute_end_time(G, 0, end_time, end_time_counter);
+    return cut_vertices;
+}
 
 vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<int> the_3_vertices_2_white_1_black) {
     assert(the_3_vertices_2_white_1_black.size() == 3);
@@ -13,13 +29,27 @@ vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<in
 
     // Fazer um mapeamento de ida e volta antes da remoção
 
-    G.RemoveVertices(the_3_vertices_of_quadrilaterals);
+    vector<int> map = G.RemoveVertices(the_3_vertices_2_white_1_black);
+    cout << "Showing removed vertices" << endl;
+    for(int i = 0; i < the_3_vertices_2_white_1_black.size(); ++i) {
+        cout <<the_3_vertices_2_white_1_black[i] << endl;
+    }
+    cout << "Showing the map" << endl;
+    for(int i = 0; i < map.size(); ++i) {
+        cout << i << "-->" << map[i] << endl;
+    }
+
     G.ShowGraph("Finding Quadrilaterals");
-    //vector<int> cut_vertices = list_cut_vertices(G);
+    vector<int> cut_vertices = list_cut_vertices(G);
+    vector<int> cut_vertices_mapped(cut_vertices.size(), 0);
+
+    for(int i = 0; i < cut_vertices.size(); ++i) {
+        cut_vertices_mapped[i] = map[cut_vertices[i]];
+    }
     // Converter cut_vertices para o cut_vertices_mapped
     
     vector<vector<int> > quadrilaterals;
-
+    /*
     for(vector<int>::iterator i = cut_vertices.begin(); i != cut_vertices.end(); ++i) {
         vector<int> possible_quadrilateral = the_3_vertices_2_white_1_black;
         possible_quadrilateral.push_back(*i);
@@ -32,10 +62,10 @@ vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<in
         }
 
         if(n_white == 2) {
-            quadrilaterals.push_back(possible_quadrilateral);
+            quadrilaterals.push_back(possible_quadrilateral); //possible quadrilateral turns into a quadrilateral
         }
     }
-
+*/
     return quadrilaterals;
 }
 

@@ -390,9 +390,18 @@ void GraphContainer::RemoveVertex(int v) {
     n_vert -= 1;
 };
 
-void GraphContainer::RemoveVertices(vector<int> vertices) {
+vector<int> GraphContainer::RemoveVertices(vector<int> vertices) {
+    vector<int> map(n_vert, -1);
+    for(int i = 0; i < n_vert; ++i) {
+        map[i] = i;
+    }
+
     sort(vertices.begin(), vertices.end(), greater<int>());
     for( vector<int>::iterator i = vertices.begin(); i != vertices.end(); ++i) {
         RemoveVertex((*i));
+        // erase the vertex i and shift the other vertices, this step produce an map
+        map.erase(std::next(map.begin(),*i));
     }
+
+    return map;
 };
