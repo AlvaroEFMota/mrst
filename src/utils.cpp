@@ -89,6 +89,56 @@ void dfs_digraph_generation(const GraphContainer G_const, int source) {
     
 }
 
-void xyz(const GraphContainer &G_const) {
-    dfs_digraph_generation(G_const, 0);
+void FindComponentInDigraphPreservingLabel(const vector<vector<int> > &digraph, int source, vector<bool> &treated) {
+    vector<int> color(digraph.size(), 0); // white
+    
+    queue<int> my_queue;
+    my_queue.push(source);
+    color[source] = 1;
+
+    while (!my_queue.empty()) {
+        int v = my_queue.front();
+        my_queue.pop();
+        color[v] = 2;
+        treated[v] = true;
+        for (vector<int>::const_iterator i = digraph[v].begin(); i != digraph[v].end(); ++i) {  
+            if (color[*i] == 0) {
+                my_queue.push(*i);
+                color[*i] = 1;
+            }
+
+        }
+    }
+}
+int FindConnectedComponentsInDigraphPreservingLabel(const vector<vector<int> > &digraph, vector<pair<int, int>> end_time) {
+    int connected_components = 0;
+    vector<int> 
+    vector<bool> treated(digraph.size(), false);
+
+    for (auto pair: end_time) {
+        if (!treated[pair.first]) {
+            connected_components++;
+            FindComponentInDigraphPreservingLabel(digraph, pair.first, treated, );
+        }
+    }
+
+    return connected_components;
+}
+
+void ShowDigraph(vector<vector<int> > digraph, string str) {
+    cout << "----------------" << str << "---------------" << endl;
+    for(int i = 0; i < digraph.size(); ++i) {
+        cout << "| " << i << ": ";
+        for(vector<int>::iterator j = digraph[i].begin(); j != digraph[i].end(); ++j) {
+            cout << *j << " ";
+        }
+        cout << endl;
+    }
+}
+
+void ShowVecPair(vector<pair<int, int> > vec_pair, string str) {
+    cout << "===== " << str << " =====" << endl;
+    for(auto pair: vec_pair) {
+        cout << "$ " << pair.first << "->" << pair.second << endl;
+    }
 }

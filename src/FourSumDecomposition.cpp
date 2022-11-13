@@ -9,28 +9,104 @@ bool sort_end_time_descendent_compare(pair<int,int> p1, pair<int,int> p2) {
     return p1.second > p2.second;
 }
 
-void dfs_compute_end_time(const GraphContainer &G, int source, vector<pair<int,int>> &end_time, int &end_time_counter, vector<int> &color) {
+/*void dfs_compute_end_time(const GraphContainer &G, int source, vector<pair<int,int>> &end_time, int &end_time_counter, vector<int> &color, vector<pair<int, int> > &edges, vector<int> &Q) {
     for(vector<int>::const_iterator it = G.graph[source].begin(); it != G.graph[source].end(); ++it) {
         if (color[*it] == 0) {
+            cout << "Arvore " << source << "-->" << *it << endl;
             color[*it] = 1;
-            dfs_compute_end_time(G, *it, end_time, end_time_counter, color);
+            Q[source] = *it;
+            edges.push_back(make_pair(source, *it));
+            dfs_compute_end_time(G, *it, end_time, end_time_counter, color, edges, Q);
+        } else if (Q[*it] != -1 && color[*it] == 2){
+            cout << "Em [" << source << ", " << *it << "] Encontrou vértice da árvore: " << *it << endl;
+            edges.push_back(make_pair(source, Q[*it]));
         }
     }
-    end_time.push_back(make_pair(source, end_time_counter));
     color[source] = 2;
+    end_time.push_back(make_pair(source, end_time_counter));
     end_time_counter++;
+}*/
+
+void dfs_build_inv_digraph(const GraphContainer &G, int vertex, vector<int> &color, vector<pair<int, int> > &edges, vector<int> &Q, vector<pair<int, int>> &end_time, int &end_time_count) {
+    for(vector<int>::const_iterator it = G.graph[vertex].begin(); it != G.graph[vertex].end(); ++it) {
+        if (color[*it] == 0) {
+            cout << "Arvore " << vertex << "-->" << *it << endl;
+            color[*it] = 1;
+            Q[vertex] = *it;
+            edges.push_back(make_pair(vertex, *it));
+            dfs_build_inv_digraph(G, *it, color, edges, Q, end_time, end_time_count);
+        } else if (Q[*it] != -1 && Q[*it] != vertex && color[*it] == 1){
+            cout << "Em [" << vertex << ", " << *it << "] Encontrou vértice da árvore: " << *it <<". Adicionado " << vertex << "-->" << Q[*it] << endl;
+            edges.push_back(make_pair(vertex, Q[*it]));
+        }
+    }
+    color[vertex] = 2;
+    end_time.push_back(make_pair(vertex, end_time_count));
+    end_time_count++;
+}
+
+vector<vector<int>> build_inv_digraph(const GraphContainer &G, vector<pair<int, int>> &end_time, int &end_time_count) {
+    vector<int> color(G.n_vert, 0);
+    vector<pair<int, int> > edges;
+    vector<int> Q(G.n_vert, -1);
+    vector<vector<int>> digraph(G.n_vert);
+
+    color[0] = 1;
+    dfs_build_inv_digraph(G, 0, color, edges, Q, end_time, end_time_count);
+    
+    for (auto edge: edges) {
+        digraph[edge.second].push_back(edge.first);
+    }
+
+    return digraph;
 }
 
 vector<int> list_cut_vertices(const GraphContainer &G) {
     vector<int> cut_vertices;
-    vector<pair<int,int>> end_time;
-    vector<int> color(G.n_vert, 0);
-    int end_time_counter = 0;
-    //Computing end time
-    dfs_compute_end_time(G, 0, end_time, end_time_counter, color);
+
+    vector<pair<int, int>> end_time;
+    int end_time_count = 0;
+
+    vector<vector<int>> inv_digraph = build_inv_digraph(G, end_time, end_time_count);
     sort(end_time.begin(), end_time.end(), sort_end_time_descendent_compare);
+    
+    ShowDigraph(inv_digraph, "Digraph");
+    ShowVecPair(end_time, "End Time");
+
+    int component_number = FindConnectedComponentsInDigraphPreservingLabel(inv_digraph);
+    /*
     for (auto i: end_time)
         cout << i.first << "--" << i.second << endl;
+
+    for (auto edge: edges)
+        inv_digraph[edge.second].push_back(edge.first); // adding inverted
+
+    for (auto edge: edges)
+        digraph[edge.first].push_back(edge.second); // adding inverted
+
+    ShowDigraph(inv_digraph, "Inv Digraph");
+    ShowDigraph(digraph, "Digraph");
+    
+
+    vector<int> component_mapping(G.n_vert, -1);
+    int count = 0;
+    for (auto comp: components) {
+        for ( int i = 0; i < comp.size(); ++i) {
+            if (comp[i].size() > 0) {
+                       component_mapping[i] = count;
+            }
+        }
+        count++;
+    }
+    cout << "Number of components: " << components.size() << endl;
+    cout << "Showing the component mapping" << endl;
+    for( int i = 0; i < G.n_vert; ++i) {
+        cout << "Vertex: " << i << "  component: " << component_mapping[i] << endl;
+    }
+*/
+
+    
+
     return cut_vertices;
 }
 
@@ -54,34 +130,34 @@ vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<in
     vector<GraphContainer> components = FindConnectedComponents(G);
     vector<vector<int> > quadrilaterals;
 
-    if (components.size() == 1) {
-        G.ShowGraph("Finding Quadrilaterals");
-        vector<int> cut_vertices = list_cut_vertices(G);
-        vector<int> cut_vertices_mapped(cut_vertices.size(), 0);
+    //if (components.size() == 1) { // Do not need this, the removal of three vertices of a brace produce a connected graph
+    G.ShowGraph("Finding Quadrilaterals");
 
-        for(int i = 0; i < cut_vertices.size(); ++i) {
-            cut_vertices_mapped[i] = map[cut_vertices[i]];
-        }
-        exit(0);
-        // Converter cut_vertices para o cut_vertices_mapped
-        
-        /*
-        for(vector<int>::iterator i = cut_vertices.begin(); i != cut_vertices.end(); ++i) {
-            vector<int> possible_quadrilateral = the_3_vertices_2_white_1_black;
-            possible_quadrilateral.push_back(*i);
+    vector<int> cut_vertices = list_cut_vertices(G);
+    vector<int> cut_vertices_mapped(cut_vertices.size(), 0);
 
-            int n_white = 0;
-            for(vector<int>::iterator j = possible_quadrilateral.begin(); j != possible_quadrilateral.end(); ++j) {
-                if(G_const.part[*j]) {
-                    n_white++;
-                }
-            }
-
-            if(n_white == 2) {
-                quadrilaterals.push_back(possible_quadrilateral); //possible quadrilateral turns into a quadrilateral
-            }
-        } */
+    for(int i = 0; i < cut_vertices.size(); ++i) {
+        cut_vertices_mapped[i] = map[cut_vertices[i]];
     }
+    exit(0);
+    // Converter cut_vertices para o cut_vertices_mapped
+    
+    /*
+    for(vector<int>::iterator i = cut_vertices.begin(); i != cut_vertices.end(); ++i) {
+        vector<int> possible_quadrilateral = the_3_vertices_2_white_1_black;
+        possible_quadrilateral.push_back(*i);
+
+        int n_white = 0;
+        for(vector<int>::iterator j = possible_quadrilateral.begin(); j != possible_quadrilateral.end(); ++j) {
+            if(G_const.part[*j]) {
+                n_white++;
+            }
+        }
+
+        if(n_white == 2) {
+            quadrilaterals.push_back(possible_quadrilateral); //possible quadrilateral turns into a quadrilateral
+        }
+    } */
 
     return quadrilaterals;
 }
