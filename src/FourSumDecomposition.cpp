@@ -73,7 +73,13 @@ vector<int> list_cut_vertices(const GraphContainer &G) {
     ShowDigraph(inv_digraph, "Digraph");
     ShowVecPair(end_time, "End Time");
 
-    int component_number = FindConnectedComponentsInDigraphPreservingLabel(inv_digraph);
+    pair<vector<int>, int> result = FindConnectedComponentsInDigraphPreservingLabel(inv_digraph, end_time);
+    vector<int> map_components = result.first;
+    int component_nnumber = result.second;
+
+    for(int i = 0; i < map_components.size(); ++i) {
+        cout << "$ " << i << " | " << map_components[i] << endl;
+    }
     /*
     for (auto i: end_time)
         cout << i.first << "--" << i.second << endl;

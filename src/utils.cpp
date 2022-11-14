@@ -89,18 +89,21 @@ void dfs_digraph_generation(const GraphContainer G_const, int source) {
     
 }
 
-void FindComponentInDigraphPreservingLabel(const vector<vector<int> > &digraph, int source, vector<bool> &treated) {
+void FindComponentInDigraphPreservingLabel(const vector<vector<int> > &digraph, int source, vector<bool> &treated, vector<int> &map_vertex_component, int component_idx) {
     vector<int> color(digraph.size(), 0); // white
     
     queue<int> my_queue;
     my_queue.push(source);
     color[source] = 1;
+    map_vertex_component[source] = component_idx;
 
     while (!my_queue.empty()) {
         int v = my_queue.front();
+        cout << "Encontrou o " << v << endl;
         my_queue.pop();
         color[v] = 2;
         treated[v] = true;
+        map_vertex_component[v] = component_idx;
         for (vector<int>::const_iterator i = digraph[v].begin(); i != digraph[v].end(); ++i) {  
             if (color[*i] == 0) {
                 my_queue.push(*i);
@@ -110,19 +113,20 @@ void FindComponentInDigraphPreservingLabel(const vector<vector<int> > &digraph, 
         }
     }
 }
-int FindConnectedComponentsInDigraphPreservingLabel(const vector<vector<int> > &digraph, vector<pair<int, int>> end_time) {
-    int connected_components = 0;
-    vector<int> 
+pair<vector<int>, int> FindConnectedComponentsInDigraphPreservingLabel(const vector<vector<int> > &digraph, vector<pair<int, int>> end_time) {
+    int component_idx = 0;
+    vector<int> map_vertex_component(digraph.size(), -1);
     vector<bool> treated(digraph.size(), false);
 
     for (auto pair: end_time) {
         if (!treated[pair.first]) {
-            connected_components++;
-            FindComponentInDigraphPreservingLabel(digraph, pair.first, treated, );
+            cout << "Partindo de " << pair.first << " Com o index " << component_idx << endl;
+            FindComponentInDigraphPreservingLabel(digraph, pair.first, treated, map_vertex_component, component_idx);
+            component_idx++;
         }
     }
 
-    return connected_components;
+    return make_pair(map_vertex_component, component_idx);
 }
 
 void ShowDigraph(vector<vector<int> > digraph, string str) {
