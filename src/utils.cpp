@@ -99,13 +99,13 @@ void FindComponentInDigraphPreservingLabel(const vector<vector<int> > &digraph, 
 
     while (!my_queue.empty()) {
         int v = my_queue.front();
-        cout << "Encontrou o " << v << endl;
+        //cout << "Find the " << v << endl;
         my_queue.pop();
         color[v] = 2;
         treated[v] = true;
         map_vertex_component[v] = component_idx;
         for (vector<int>::const_iterator i = digraph[v].begin(); i != digraph[v].end(); ++i) {  
-            if (color[*i] == 0) {
+            if (color[*i] == 0 && !treated[*i]) {
                 my_queue.push(*i);
                 color[*i] = 1;
             }
@@ -120,7 +120,7 @@ pair<vector<int>, int> FindConnectedComponentsInDigraphPreservingLabel(const vec
 
     for (auto pair: end_time) {
         if (!treated[pair.first]) {
-            cout << "Partindo de " << pair.first << " Com o index " << component_idx << endl;
+            //cout << "Starting from " << pair.first << " with the index " << component_idx << endl;
             FindComponentInDigraphPreservingLabel(digraph, pair.first, treated, map_vertex_component, component_idx);
             component_idx++;
         }
