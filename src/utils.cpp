@@ -89,7 +89,7 @@ void dfs_digraph_generation(const GraphContainer G_const, int source) {
     
 }
 
-void FindComponentInDigraphPreservingLabel(const vector<vector<int> > &digraph, int source, vector<bool> &treated, vector<int> &map_vertex_component, int component_idx) {
+void FindComponentMapInDigraph(const vector<vector<int> > &digraph, int source, vector<bool> &treated, vector<int> &map_vertex_component, int component_idx) {
     vector<int> color(digraph.size(), 0); // white
     
     queue<int> my_queue;
@@ -113,7 +113,7 @@ void FindComponentInDigraphPreservingLabel(const vector<vector<int> > &digraph, 
         }
     }
 }
-pair<vector<int>, int> FindConnectedComponentsInDigraphPreservingLabel(const vector<vector<int> > &digraph, vector<pair<int, int>> end_time) {
+pair<vector<int>, int> FindConnectedComponentsMapInDigraph(const vector<vector<int> > &digraph, vector<pair<int, int>> end_time) {
     int component_idx = 0;
     vector<int> map_vertex_component(digraph.size(), -1);
     vector<bool> treated(digraph.size(), false);
@@ -121,7 +121,7 @@ pair<vector<int>, int> FindConnectedComponentsInDigraphPreservingLabel(const vec
     for (auto pair: end_time) {
         if (!treated[pair.first]) {
             //cout << "Starting from " << pair.first << " with the index " << component_idx << endl;
-            FindComponentInDigraphPreservingLabel(digraph, pair.first, treated, map_vertex_component, component_idx);
+            FindComponentMapInDigraph(digraph, pair.first, treated, map_vertex_component, component_idx);
             component_idx++;
         }
     }
