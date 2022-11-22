@@ -1,31 +1,8 @@
 #include "FourSumDecomposition.hpp"
 
-/*bool CheckQuadrilateral(const GraphContainer &G, vector<int> quadrilateral) {
-    //check the map and the quadrilateral
-}
-*/
-
 bool sort_end_time_descendent_compare(pair<int,int> p1, pair<int,int> p2) {
     return p1.second > p2.second;
 }
-
-/*void dfs_compute_end_time(const GraphContainer &G, int source, vector<pair<int,int>> &end_time, int &end_time_counter, vector<int> &color, vector<pair<int, int> > &edges, vector<int> &Q) {
-    for(vector<int>::const_iterator it = G.graph[source].begin(); it != G.graph[source].end(); ++it) {
-        if (color[*it] == 0) {
-            cout << "Arvore " << source << "-->" << *it << endl;
-            color[*it] = 1;
-            Q[source] = *it;
-            edges.push_back(make_pair(source, *it));
-            dfs_compute_end_time(G, *it, end_time, end_time_counter, color, edges, Q);
-        } else if (Q[*it] != -1 && color[*it] == 2){
-            cout << "Em [" << source << ", " << *it << "] Encontrou vértice da árvore: " << *it << endl;
-            edges.push_back(make_pair(source, Q[*it]));
-        }
-    }
-    color[source] = 2;
-    end_time.push_back(make_pair(source, end_time_counter));
-    end_time_counter++;
-}*/
 
 void dfs_build_graph(const GraphContainer &G, int vertex, vector<int> &color, vector<pair<int, int> > &edges, vector<int> &Q, vector<pair<int, int>> &end_time, int &end_time_count) {
     for(vector<int>::const_iterator it = G.graph[vertex].begin(); it != G.graph[vertex].end(); ++it) {
@@ -85,11 +62,15 @@ vector<int> list_cut_vertices(const GraphContainer &G) {
         cout << "$ " << i << " | " << map_components[i] << endl;
     }
 
+    vector<bool> added(inv_digraph.size(), false);
     for (int i = 0; i < inv_digraph.size(); ++i) {
         for (vector<int>::iterator j = inv_digraph[i].begin(); j != inv_digraph[i].end(); ++j) {
             if (map_components[i] != map_components[*j]) {
-                cut_vertices.push_back(i);
-                cout << "treating edge " << i<<", "<< *j << "  Look at " << i << endl;
+                if(*j > 0 && !added[*j]) {
+                    added[*j] = true;
+                    cut_vertices.push_back(*j);
+                    cout << "treating edge " << i<<", "<< *j << "  Look at " << *j << endl;
+                }
             }
         }
     }
@@ -136,8 +117,9 @@ vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<in
     G.ShowGraph("Before removal");
 
     // Fazer um mapeamento de ida e volta antes da remoção
-
-    vector<int> map = G.RemoveVertices(the_3_vertices_2_white_1_black);
+    vector<int> vertices_test = {4, 10, 5};
+    vector<int> map = G.RemoveVertices(vertices_test);
+    //vector<int> map = G.RemoveVertices(the_3_vertices_2_white_1_black);
     //cout << "Showing removed vertices" << endl;
     //for(int i = 0; i < the_3_vertices_2_white_1_black.size(); ++i) {
         //cout <<the_3_vertices_2_white_1_black[i] << endl;
@@ -155,7 +137,7 @@ vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<in
     vector<int> cut_vertices = list_cut_vertices(G);
     vector<int> cut_vertices_mapped(cut_vertices.size(), 0);
 
-    // Converter cut_vertices para o cut_vertices_mapped
+    // Converting cut_vertices to the cut_vertices_mapped
     for(int i = 0; i < cut_vertices.size(); ++i) {
         cut_vertices_mapped[i] = map[cut_vertices[i]];
     }
@@ -164,6 +146,7 @@ vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<in
     for(int i = 0; i < cut_vertices_mapped.size(); ++i) {
         cout << i << "-->" << cut_vertices_mapped[i] << endl;
     }
+    exit(0);
     
     for(vector<int>::iterator i = cut_vertices_mapped.begin(); i != cut_vertices_mapped.end(); ++i) {
         vector<int> possible_quadrilateral = the_3_vertices_2_white_1_black;
@@ -218,13 +201,36 @@ vector<vector<int>> find_all_quadrilaterals(const GraphContainer &G_const) {
     return all_quadrilaterals;
 }
 
-/*vector<GraphContainer> FourSumReduction(const GraphContainer &G, vector<int> quadrilateral) {
+vector<pair<GraphContainer, vector<int>>> FourSumReduction(const pair<GraphContainer, vector<int>> &graph_map, vector<int> quadrilateral) {
+    GraphContainer G_tmp = graph_map.first;
+    vector<int> removal_map = G_tmp.RemoveVertices(quadrilateral);
+    vector<GraphContainer> components = FindConnectedComponents(G_tmp);
 
-}*/
+    bool reduction_prerequisite = true;
+
+    if (components.size() > 3) {
+        for (auto component: components) {
+            if (component.graph.size() < 2) {
+                reduction_prerequisite = false;
+            } // The size must have at last 2 vertices, because the brace must have at last 6 vertices (2 + quadrilateral)
+        }
+    } else {
+        reduction_prerequisite = false;
+    }
+
+    vector<pair<GraphContainer, vector<int>>> resultant_components;
+
+    if (reduction_prerequisite) {
+        
+    }
+
+    
+
+}
 
 vector<GraphContainer> DecomposeInFourSum(const GraphContainer &G_const) {
     GraphContainer G = G_const;
-    vector<GraphContainer> components;
+    vector<pair<GraphContainer, vector<int>>> components_pair;
     vector<GraphContainer> final_components_list;
     if (!G.bipartitionComputed)
         G.ComputeBipartite();
@@ -239,19 +245,21 @@ vector<GraphContainer> DecomposeInFourSum(const GraphContainer &G_const) {
         cout << endl;
     }*/
 
+    vector<int> initial_map(G.n_vert);
+    for (int i = 0; i < initial_map.size(); ++i) {
+        initial_map[i] = i;
+    }
 
-    
-    /*components.push_back(G);
-    while(!components.empty()) {
-        GraphContainer G_tmp = components.back();
-        components.pop_back();
+    components_pair.push_back(make_pair(G, initial_map));
+    while(!components_pair.empty()) {
+        pair<GraphContainer, vector<int>> component_pair = components_pair.back();
+
+        components_pair.pop_back();
 
         for(int i = 0; i < all_quadrilaterals.size(); ++i) {
-            if (CheckQuadrilateral(G_tmp, all_quadrilaterals[i])) {
-                FourSumReduction(G_tmp, all_quadrilaterals[i]);
-            }
+            FourSumReduction(component_pair, all_quadrilaterals[i]);
         }
-    }*/
+    }
 
     return final_components_list;
 }
