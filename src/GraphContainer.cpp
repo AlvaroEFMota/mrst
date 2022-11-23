@@ -405,3 +405,9 @@ vector<int> GraphContainer::RemoveVertices(vector<int> vertices) {
 
     return map;
 };
+
+int GraphContainer::AddVertex() {
+    int new_index = graph.size();
+    graph.resize(graph.size()+1);
+    return new_index;
+}

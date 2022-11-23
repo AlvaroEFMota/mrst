@@ -146,3 +146,67 @@ void ShowVecPair(vector<pair<int, int> > vec_pair, string str) {
         cout << "$ " << pair.first << "->" << pair.second << endl;
     }
 }
+
+pair<GraphContainer, vector<int>> FindComponentKeepReference(const GraphContainer &G, int source, vector<bool> &treated, vector<int> &quadrilateral_removal_map) {
+    vector<int> map(G.n_vert, -1);
+    int n_vertices = 0;
+    vector<pair<int, int> > edge_list;
+
+    vector<int> color(G.n_vert, 0); // white
+    
+    queue<int> my_queue;
+    my_queue.push(source);
+    color[source] = 1;
+
+    while (!my_queue.empty()) {
+        int v = my_queue.front();
+        my_queue.pop();
+        map[v] = n_vertices; 
+        n_vertices += 1;
+        color[v] = 2;
+        treated[v] = true;
+        for (vector<int>::const_iterator i = G.graph[v].begin(); i != G.graph[v].end(); ++i) {  
+            if (color[*i] == 0) {
+                my_queue.push(*i);
+                color[*i] = 1;
+            }
+
+            if (v < *i) {
+                edge_list.push_back(make_pair(v, *i));
+            }
+
+        }
+    }
+
+    GraphContainer component(n_vertices);
+
+    for (vector<pair<int, int> >::iterator edge = edge_list.begin(); edge != edge_list.end(); ++edge) {
+        component.AddEdge(map[(*edge).first], map[(*edge).second]);
+    }
+
+    vector<int> return_map(G.n_vert, -1);
+    for(int i = 0; i < return_map.size(); ++i) {
+        if (map[i] != -1) {
+            return_map[map[i]] = quadrilateral_removal_map[i];
+        }
+    }
+    return make_pair(component, return_map);
+}
+
+vector<pair<GraphContainer, vector<int>>> FindConnectedComponentsKeepReference(const GraphContainer &G, vector<int> &quadrilateral_removal_map) {
+    vector<pair<GraphContainer, vector<int>>> connected_components_pair;
+    vector<bool> treated(G.n_vert, false);
+
+    for (int i = 0; i < G.n_vert; ++i) {
+        if (treated[i] == false) {
+            pair<GraphContainer,vector<int>> component_pair;
+            component_pair = FindComponentKeepReference(G, i, treated, quadrilateral_removal_map);
+            connected_components_pair.push_back(component_pair);
+        }
+    }
+    return connected_components_pair;
+}
+
+//void AddVertexMap(GraphContainer &G, int map_reference) {
+    
+//}

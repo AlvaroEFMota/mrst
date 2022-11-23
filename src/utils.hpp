@@ -13,5 +13,5 @@ int BoolToInt(bool value);
 pair<vector<int>, int> FindConnectedComponentsMapInDigraph(const vector<vector<int> > &digraph, vector<pair<int, int>> end_time);
 void ShowDigraph(vector<vector<int> > digraph, string str);
 void ShowVecPair(vector<pair<int, int> > vec_pair, string str);
-
+vector<pair<GraphContainer, vector<int>>> FindConnectedComponentsKeepReference(const GraphContainer &G, vector<int> &quadrilateral_removal_map);
 #endif

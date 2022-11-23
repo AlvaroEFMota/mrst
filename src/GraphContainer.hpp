@@ -109,6 +109,11 @@ public:
      * map of vertices mapping the current on the previous vertex label.
      */
     vector<int> RemoveVertices(vector<int> vertices);
+
+    /* Increase the graph vector size and return the new index of the graph vector
+     *
+     */
+    int AddVertex();
 };
 
 
