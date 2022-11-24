@@ -204,7 +204,6 @@ pair<GraphContainer, vector<int>> add_quadrilateral(pair<GraphContainer, vector<
     //     cout << i << " -|- " << component_pair.second[i] << endl;
     // }
 
-    component_pair.first.ShowGraph(" before 4 Sum");
     // for (auto quadrilateral_vertex: quadrilateral) {
     //     int vertex = component_pair.first.AddVertex();
     //     component_pair.second[vertex] = quadrilateral_vertex;
@@ -212,7 +211,6 @@ pair<GraphContainer, vector<int>> add_quadrilateral(pair<GraphContainer, vector<
     for (int i = 0; i < quadrilateral.size(); ++i) {
         component_pair.second[component_pair.first.graph.size()-4+i] = quadrilateral[i];
     }
-    component_pair.first.ShowGraph(" between ");
 
     // component_pair.first.ShowGraph("component_pair");
 
@@ -249,7 +247,7 @@ pair<GraphContainer, vector<int>> add_quadrilateral(pair<GraphContainer, vector<
         }
     }
 
-    component_pair.first.ShowGraph("4 Sum");
+    component_pair.first.ShowGraph("Brace");
     return component_pair;
 }
 
@@ -306,7 +304,7 @@ vector<pair<GraphContainer, vector<int>>> FourSumReduction(const pair<GraphConta
             // for (int i =0; i< component_pair.second.size(); ++i) {
             //     cout << i << " ## " << component_pair.second[i] << endl;
             // }
-            if (component_pair.first.graph.size() < 2) {
+            if (component_pair.first.graph.size() < 6) {
                 reduction_prerequisite = false;
             } // The size must have at last 2 vertices, because the brace must have at last 6 vertices (2 + quadrilateral)
         }
@@ -353,9 +351,9 @@ vector<GraphContainer> DecomposeInFourSum(const GraphContainer &G_const) {
         components_pair.pop_back();
         bool match_quadrilateral = false;
         for(int i = 0; i < all_quadrilaterals.size() && !match_quadrilateral; ++i) {
-            cout << "Calling for [" << all_quadrilaterals[i][0]<<", "<<all_quadrilaterals[i][1]<<", "<<all_quadrilaterals[i][2]<<", "<<all_quadrilaterals[i][3]<<"] for the graph size = "<< component_pair.first.graph.size()<<endl;
+            cout << "Calling for [" << all_quadrilaterals[i][0]<<", "<<all_quadrilaterals[i][1]<<", "<<all_quadrilaterals[i][2]<<", "<<all_quadrilaterals[i][3]<<"] for the graph size = "<< component_pair.first.graph.size();
             vector<pair<GraphContainer, vector<int>>> braces = FourSumReduction(component_pair, all_quadrilaterals[i], G);
-            cout << "Brace size = " << braces.size() << endl;
+            cout << "  Brace size = " << braces.size() << endl;
             if (braces.size() > 0){
                 match_quadrilateral = true;
                 for (auto brace: braces) {
