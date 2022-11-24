@@ -178,7 +178,7 @@ pair<GraphContainer, vector<int>> FindComponentKeepReference(const GraphContaine
         }
     }
 
-    GraphContainer component(n_vertices);
+    GraphContainer component(n_vertices+4);
 
     for (vector<pair<int, int> >::iterator edge = edge_list.begin(); edge != edge_list.end(); ++edge) {
         component.AddEdge(map[(*edge).first], map[(*edge).second]);

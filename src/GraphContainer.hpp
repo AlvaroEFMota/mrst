@@ -19,6 +19,7 @@ private:
     bool BfsAugmentPath(int source);
     bool isBipartite;
     void RemoveVertex(int v);
+    void OnlyRemoveVertex(int v); // This function do not touch in the mathing or partition
 public:
     vector<vector<int>> graph; // graph[v] has the list of neighbours of v
     vector<bool> part; // part[v]= which part of the bipartition of G vertex v is in
@@ -109,6 +110,11 @@ public:
      * map of vertices mapping the current on the previous vertex label.
      */
     vector<int> RemoveVertices(vector<int> vertices);
+
+    /* // This function do not touch in the mathing or partition
+     *
+     */
+    vector<int> OnlyRemoveVertices(vector<int> vertices);
 
     /* Increase the graph vector size and return the new index of the graph vector
      *

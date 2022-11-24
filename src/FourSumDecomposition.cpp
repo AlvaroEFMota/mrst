@@ -198,24 +198,28 @@ vector<vector<int>> find_all_quadrilaterals(const GraphContainer &G_const) {
     return all_quadrilaterals;
 }
 
-void add_quadrilateral(pair<GraphContainer, vector<int>> component_pair, vector<int> quadrilateral, const GraphContainer FirstGraph) {
-    cout << "Showing component_pair map before modiification" << endl;
-    for (int i = 0; i < component_pair.second.size(); ++i) {
-        cout << i << " -|- " << component_pair.second[i] << endl;
-    }
+pair<GraphContainer, vector<int>> add_quadrilateral(pair<GraphContainer, vector<int>> component_pair, vector<int> quadrilateral, const GraphContainer FirstGraph) {
+    // cout << "Showing component_pair map before modiification" << endl;
+    // for (int i = 0; i < component_pair.second.size(); ++i) {
+    //     cout << i << " -|- " << component_pair.second[i] << endl;
+    // }
 
-    vector<int> added_vertices;
-    for (auto quadrilateral_vertex: quadrilateral) {
-        int vertex = component_pair.first.AddVertex();
-        component_pair.second[vertex] = quadrilateral_vertex;
+    component_pair.first.ShowGraph(" before 4 Sum");
+    // for (auto quadrilateral_vertex: quadrilateral) {
+    //     int vertex = component_pair.first.AddVertex();
+    //     component_pair.second[vertex] = quadrilateral_vertex;
+    // }
+    for (int i = 0; i < quadrilateral.size(); ++i) {
+        component_pair.second[component_pair.first.graph.size()-4+i] = quadrilateral[i];
     }
+    component_pair.first.ShowGraph(" between ");
 
-    component_pair.first.ShowGraph("component_pair");
+    // component_pair.first.ShowGraph("component_pair");
 
-    cout << "Showing component_pair map after modiification" << endl;
-    for (int i = 0; i < component_pair.second.size(); ++i) {
-        cout << i << " -|- " << component_pair.second[i] << endl;
-    }
+    // cout << "Showing component_pair map after modiification" << endl;
+    // for (int i = 0; i < component_pair.second.size(); ++i) {
+    //     cout << i << " -|- " << component_pair.second[i] << endl;
+    // }
 
     vector<int> inv_map(component_pair.second.size(), -1);
     for (int i = 0; i < inv_map.size(); ++i) {
@@ -224,10 +228,10 @@ void add_quadrilateral(pair<GraphContainer, vector<int>> component_pair, vector<
         }
     }
 
-    cout << "Showing component_pair inv map" << endl;
-    for (int i = 0; i < component_pair.second.size(); ++i) {
-        cout << i << " -|- " << inv_map[i] << endl;
-    }
+    // cout << "Showing component_pair inv map" << endl;
+    // for (int i = 0; i < component_pair.second.size(); ++i) {
+    //     cout << i << " -|- " << inv_map[i] << endl;
+    // }
 
     for (auto quadrilateral_vertex: quadrilateral) {
         for (auto neightbor: FirstGraph.graph[quadrilateral_vertex]) {
@@ -246,17 +250,42 @@ void add_quadrilateral(pair<GraphContainer, vector<int>> component_pair, vector<
     }
 
     component_pair.first.ShowGraph("4 Sum");
+    return component_pair;
 }
 
 vector<pair<GraphContainer, vector<int>>> FourSumReduction(const pair<GraphContainer, vector<int>> &graph_pair, vector<int> quadrilateral, const GraphContainer &FirstGraph) {
     vector<pair<GraphContainer, vector<int>>> resultant_components;
     GraphContainer G_tmp = graph_pair.first;
-    vector<int> removal_map = G_tmp.RemoveVertices(quadrilateral);// I need to convert quadrilateral to mapped_aquadrilateral before removal
+
+    // convert quadrilateral using a map
+    // create a inv_map
+    vector<int> inv_map(FirstGraph.graph.size(), -1);
+    for (int i = 0; i < inv_map.size(); ++i) {
+        if (graph_pair.second[i] != -1) {
+            inv_map[graph_pair.second[i]] = i;
+        }
+    }
+
+    vector<int> quadrilateral_mapped;
+    for (auto vertex: quadrilateral) {
+        if (inv_map[vertex] == -1) {
+            return resultant_components;
+        }
+        quadrilateral_mapped.push_back(inv_map[vertex]);
+    }
+
+    cout << "quadrilateral to be removed  ";
+    for (int i = 0; i < quadrilateral_mapped.size(); ++i) {
+        cout << quadrilateral_mapped[i] << " ";
+    }
+    cout << endl;
+    //graph_pair.first.ShowGraph("Can Remove");
+    // Remove the vertices 
+    vector<int> removal_map = G_tmp.OnlyRemoveVertices(quadrilateral_mapped);// I need to convert quadrilateral to mapped_aquadrilateral before removal
     // for (int i = 0; i < 4; ++i) {
     //     removal_map.push_back(-1);
     // }
     vector<pair<GraphContainer, vector<int>>> components_pair = FindConnectedComponentsKeepReference(G_tmp, removal_map, FirstGraph);
-
     /*cout << "Showing the removal map" << endl;
     for(int i = 0; i < removal_map.size(); ++i) {
         cout << i << " ¬ " << removal_map[i] << endl;
@@ -266,12 +295,17 @@ vector<pair<GraphContainer, vector<int>>> FourSumReduction(const pair<GraphConta
     if (components_pair.size() >= 3) {
         cout << "Found" << endl;
 
+        cout << "Showing map" << endl;
+        for(int i = 0; i < graph_pair.second.size(); ++i) {
+            cout << i << " -- " << graph_pair.second[i] << endl;
+        }
+
         for (auto component_pair: components_pair) {
             component_pair.first.ShowGraph("component");
-            cout << "Showing component map" << endl;
-            for (int i =0; i< component_pair.second.size(); ++i) {
-                cout << i << " ## " << component_pair.second[i] << endl;
-            }
+            // cout << "Showing component map" << endl;
+            // for (int i =0; i< component_pair.second.size(); ++i) {
+            //     cout << i << " ## " << component_pair.second[i] << endl;
+            // }
             if (component_pair.first.graph.size() < 2) {
                 reduction_prerequisite = false;
             } // The size must have at last 2 vertices, because the brace must have at last 6 vertices (2 + quadrilateral)
@@ -290,12 +324,10 @@ vector<pair<GraphContainer, vector<int>>> FourSumReduction(const pair<GraphConta
                 //cout<< i << " updated to " << component_pair.second[i] << endl;
             }
 
-            add_quadrilateral(component_pair, quadrilateral, FirstGraph);
-
+            pair<GraphContainer, vector<int>> brace_pair = add_quadrilateral(component_pair, quadrilateral, FirstGraph);
+            resultant_components.push_back(brace_pair);
         }
     }
-
-    
     return resultant_components;
 }
 
@@ -308,28 +340,44 @@ vector<GraphContainer> DecomposeInFourSum(const GraphContainer &G_const) {
 
     vector<vector<int> > all_quadrilaterals = find_all_quadrilaterals(G);
     
-    /*cout << "Printing the quadrilaterals found" << endl;
-    for (auto quadrilateral: all_quadrilaterals) {
-        for (auto vertex: quadrilateral) {
-            cout << " ~ "<< vertex;
-        }
-        cout << endl;
-    }*/
     vector<int> initial_map(G.n_vert);
     for (int i = 0; i < initial_map.size(); ++i) {
         initial_map[i] = i;
     }
 
+    G.ShowGraph("FistGraph");
     components_pair.push_back(make_pair(G, initial_map));
     while(!components_pair.empty()) {
         pair<GraphContainer, vector<int>> component_pair = components_pair.back();
 
         components_pair.pop_back();
-
-        for(int i = 0; i < all_quadrilaterals.size(); ++i) {
-            cout << "Calling for [" << all_quadrilaterals[i][0]<<", "<<all_quadrilaterals[i][1]<<", "<<all_quadrilaterals[i][2]<<", "<<all_quadrilaterals[i][3]<<"]"<< endl;
-            FourSumReduction(component_pair, all_quadrilaterals[i], G);
+        bool match_quadrilateral = false;
+        for(int i = 0; i < all_quadrilaterals.size() && !match_quadrilateral; ++i) {
+            cout << "Calling for [" << all_quadrilaterals[i][0]<<", "<<all_quadrilaterals[i][1]<<", "<<all_quadrilaterals[i][2]<<", "<<all_quadrilaterals[i][3]<<"] for the graph size = "<< component_pair.first.graph.size()<<endl;
+            vector<pair<GraphContainer, vector<int>>> braces = FourSumReduction(component_pair, all_quadrilaterals[i], G);
+            cout << "Brace size = " << braces.size() << endl;
+            if (braces.size() > 0){
+                match_quadrilateral = true;
+                for (auto brace: braces) {
+                    brace.first.ShowGraph("Brace");
+                    // for (int j = 0; j < brace.second.size(); ++j) {
+                    //     cout << j << " @ " << brace.second[j] << endl;
+                    // }
+                    components_pair.push_back(brace);
+                }
+                //remove the used quadrilateral
+                all_quadrilaterals.erase(std::next(all_quadrilaterals.begin(), i));
+            }
         }
+
+        if (!match_quadrilateral){
+            final_components_list.push_back(component_pair.first);
+        }
+
+    }
+
+    for (auto comp: final_components_list) {
+        comp.ShowGraph("Final");
     }
 
     return final_components_list;

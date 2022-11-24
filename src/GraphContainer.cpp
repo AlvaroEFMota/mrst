@@ -3,18 +3,19 @@
 /* Generate an empty GraphConteiner with no vertex, no matching
  * with the n_vert and matc_size iquals to zero.
  */
-GraphContainer::GraphContainer() {
+GraphContainer::GraphContainer()
+{
     n_vert = 0;
     matc_size = 0;
     isBipartite = false;
     bipartitionComputed = false;
 }
 
-
 /* Initialize a graph with "size" vertices, a partition with all vertices in the
  * same part, an empty matching. When matching[v] = -1 means the vertex v is not matched.
  */
-GraphContainer::GraphContainer(int size) {
+GraphContainer::GraphContainer(int size)
+{
     graph.resize(size);
     part.resize(size, false);
     matching.resize(size, -1);
@@ -24,7 +25,6 @@ GraphContainer::GraphContainer(int size) {
     matc_size = 0;
     bipartitionComputed = false;
     isBipartite = false;
-    
 }
 
 void GraphContainer::GraphInitFromStdin()
@@ -94,7 +94,8 @@ bool GraphContainer::ComputeBipartite()
     {
         if (setted[source] == false)
         {
-            if (!BfsBipartite(source, setted)) {
+            if (!BfsBipartite(source, setted))
+            {
                 isBipartite = false;
                 bipartitionComputed = true;
                 return false;
@@ -127,7 +128,7 @@ bool GraphContainer::BfsBipartite(int source, vector<bool> &setted)
         color[vertex] = 2; // black
         for (vector<int>::iterator it = graph[vertex].begin(); it != graph[vertex].end(); ++it)
         {
-            if (setted[*it] == true && part[vertex] == part[*it]) // Use this information as 
+            if (setted[*it] == true && part[vertex] == part[*it]) // Use this information as
             // return.
             {
                 return false;
@@ -144,7 +145,6 @@ bool GraphContainer::BfsBipartite(int source, vector<bool> &setted)
 
     // delelte color
     return true;
-    
 }
 
 bool GraphContainer::KuhnMunkres()
@@ -166,17 +166,20 @@ bool GraphContainer::KuhnMunkres()
     }
 
     int count = 0;
-    for (vector<int>::iterator i = matching.begin(); i != matching.end(); ++i) {
-        if (*i != -1) {
+    for (vector<int>::iterator i = matching.begin(); i != matching.end(); ++i)
+    {
+        if (*i != -1)
+        {
             count++;
         }
     }
-    matc_size = count/2;
-    return matc_size == n_vert/2;
+    matc_size = count / 2;
+    return matc_size == n_vert / 2;
 }
 
-bool GraphContainer::PerfectMatching() {
-    return matc_size == n_vert/2;
+bool GraphContainer::PerfectMatching()
+{
+    return matc_size == n_vert / 2;
 }
 
 bool GraphContainer::BfsAugmentPath(int source)
@@ -246,7 +249,8 @@ bool GraphContainer::BfsAugmentPath(int source)
     return target != -1;
 }
 
-void GraphContainer::ShowGraph(string graph_desc) const {
+void GraphContainer::ShowGraph(string graph_desc) const
+{
     int count = 0;
     cout << "----- " << graph_desc << " -----" << endl;
     for (vector<vector<int>>::const_iterator i = graph.begin(); i != graph.end(); ++i)
@@ -305,29 +309,37 @@ void GraphContainer::RemoveEdge(int v1, int v2)
     }
 }
 
-void GraphContainer::IsolateVerteces(vector<int> verticesToIsolate) {
-    vector<pair<int, int> > edges_for_removal;
-    for (vector<int>::iterator i = verticesToIsolate.begin(); i != verticesToIsolate.end(); ++i) {
-        for (vector<int>::iterator j = graph[*i].begin(); j != graph[*i].end(); ++j) {
-             if (find(verticesToIsolate.begin(), verticesToIsolate.end(), (*j)) == verticesToIsolate.end()) { // use verticesToIsolate.find(*j) != verticesToIsolate.end(), remove 269--273
+void GraphContainer::IsolateVerteces(vector<int> verticesToIsolate)
+{
+    vector<pair<int, int>> edges_for_removal;
+    for (vector<int>::iterator i = verticesToIsolate.begin(); i != verticesToIsolate.end(); ++i)
+    {
+        for (vector<int>::iterator j = graph[*i].begin(); j != graph[*i].end(); ++j)
+        {
+            if (find(verticesToIsolate.begin(), verticesToIsolate.end(), (*j)) == verticesToIsolate.end())
+            { // use verticesToIsolate.find(*j) != verticesToIsolate.end(), remove 269--273
                 pair<int, int> edge(*i, *j);
                 edges_for_removal.push_back(edge);
             }
-
         }
     }
 
-    for (vector<pair<int, int> >::iterator i = edges_for_removal.begin(); i != edges_for_removal.end(); ++i) {
+    for (vector<pair<int, int>>::iterator i = edges_for_removal.begin(); i != edges_for_removal.end(); ++i)
+    {
         RemoveEdge((*i).first, (*i).second);
-    }       
+    }
 }
 
-vector<pair<int,int>> GraphContainer::ListAllEdges() const {
-    vector<pair<int,int>> list;
-    for (int i = 0; i < n_vert; ++i) {
-        for (vector<int>::const_iterator j = graph[i].begin(); j != graph[i].end(); ++j) {
-            if (i < (*j)) {
-                //cout << i << " - " << (*j) << endl;
+vector<pair<int, int>> GraphContainer::ListAllEdges() const
+{
+    vector<pair<int, int>> list;
+    for (int i = 0; i < n_vert; ++i)
+    {
+        for (vector<int>::const_iterator j = graph[i].begin(); j != graph[i].end(); ++j)
+        {
+            if (i < (*j))
+            {
+                // cout << i << " - " << (*j) << endl;
                 pair<int, int> edge;
                 edge.first = i;
                 edge.second = (*j);
@@ -339,42 +351,54 @@ vector<pair<int,int>> GraphContainer::ListAllEdges() const {
     return list;
 }
 
-void GraphContainer::RemoveVertex(int v) {
+void GraphContainer::RemoveVertex(int v)
+{
     // deleting vertex v
     // remove v from neighbohood of others verteces
-    for (vector<vector<int>>::iterator i = graph.begin(); i != graph.end(); ++i) {
-        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j) {
-            if (*j == v){
+    for (vector<vector<int>>::iterator i = graph.begin(); i != graph.end(); ++i)
+    {
+        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j)
+        {
+            if (*j == v)
+            {
                 (*i).erase(j);
                 break;
             }
         }
     }
     // erase v from graph (hence the verteces will be shifted)
-    graph.erase(std::next(graph.begin(),v));
+    graph.erase(std::next(graph.begin(), v));
 
     // subtract 1 from adjacent verteces who is greater than v
-    for (vector<vector<int>>::iterator i = graph.begin(); i != graph.end(); ++i) {
-        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j) {
-            if (*j > v){
-                *j-=1;
+    for (vector<vector<int>>::iterator i = graph.begin(); i != graph.end(); ++i)
+    {
+        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j)
+        {
+            if (*j > v)
+            {
+                *j -= 1;
             }
         }
     }
 
     // shifting the color array
-    for (int i = v; i < n_vert-1; ++i) {
-        part[i] = part[i+1];
+    for (int i = v; i < n_vert - 1; ++i)
+    {
+        part[i] = part[i + 1];
     }
 
     // fixing the matching
-    if (matching[v] != -1) {
+    if (matching[v] != -1)
+    {
 
-        for (int i = 0; i < n_vert; ++i) {
-            if (matching[i] == v){
+        for (int i = 0; i < n_vert; ++i)
+        {
+            if (matching[i] == v)
+            {
                 matching[i] = -1;
             }
-            if (matching[i] > v){
+            if (matching[i] > v)
+            {
                 matching[i] -= 1;
             }
         }
@@ -382,32 +406,93 @@ void GraphContainer::RemoveVertex(int v) {
     }
 
     // shifting the matching
-    for (int i = v; i < n_vert-1; ++i) {
-        matching[i] = matching[i+1];
+    for (int i = v; i < n_vert - 1; ++i)
+    {
+        matching[i] = matching[i + 1];
     }
 
     // resizing the lenght
     n_vert -= 1;
 };
 
-vector<int> GraphContainer::RemoveVertices(vector<int> vertices) {
+void GraphContainer::OnlyRemoveVertex(int v)
+{
+    // deleting vertex v
+    // remove v from neighbohood of others verteces
+    for (vector<vector<int>>::iterator i = graph.begin(); i != graph.end(); ++i)
+    {
+        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j)
+        {
+            if (*j == v)
+            {
+                (*i).erase(j);
+                break;
+            }
+        }
+    }
+    // erase v from graph (hence the verteces will be shifted)
+    graph.erase(std::next(graph.begin(), v));
+
+    // subtract 1 from adjacent verteces who is greater than v
+    for (vector<vector<int>>::iterator i = graph.begin(); i != graph.end(); ++i)
+    {
+        for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); ++j)
+        {
+            if (*j > v)
+            {
+                *j -= 1;
+            }
+        }
+    }
+
+    // resizing the lenght
+    n_vert -= 1;
+};
+
+vector<int> GraphContainer::RemoveVertices(vector<int> vertices)
+{
     vector<int> map(n_vert, -1);
-    for(int i = 0; i < n_vert; ++i) {
+    for (int i = 0; i < n_vert; ++i)
+    {
         map[i] = i;
     }
 
     sort(vertices.begin(), vertices.end(), greater<int>());
-    for( vector<int>::iterator i = vertices.begin(); i != vertices.end(); ++i) {
+    for (vector<int>::iterator i = vertices.begin(); i != vertices.end(); ++i)
+    {
         RemoveVertex((*i));
-        // erase the vertex i and shift the other vertices, this step produce an map
-        map.erase(std::next(map.begin(),*i));
+
+        // erase the vertex i and shift the other vertices on this map, this step produce an map
+        map.erase(std::next(map.begin(), *i));
     }
 
     return map;
 };
 
-int GraphContainer::AddVertex() {
+vector<int> GraphContainer::OnlyRemoveVertices(vector<int> vertices)
+{
+    vector<int> map(n_vert, -1);
+    for (int i = 0; i < n_vert; ++i)
+    {
+        map[i] = i;
+    }
+
+    sort(vertices.begin(), vertices.end(), greater<int>());
+    for (vector<int>::iterator i = vertices.begin(); i != vertices.end(); ++i)
+    {
+        RemoveVertex((*i));
+
+        // erase the vertex i and shift the other vertices on this map, this step produce an map
+        map.erase(std::next(map.begin(), *i));
+    }
+
+    return map;
+};
+
+int GraphContainer::AddVertex()
+{
     int new_index = graph.size();
-    graph.resize(graph.size()+1);
+    graph.resize(graph.size() + 1);
+    n_vert++;
     return new_index;
 }
