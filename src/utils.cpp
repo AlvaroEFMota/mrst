@@ -147,8 +147,8 @@ void ShowVecPair(vector<pair<int, int> > vec_pair, string str) {
     }
 }
 
-pair<GraphContainer, vector<int>> FindComponentKeepReference(const GraphContainer &G, int source, vector<bool> &treated, vector<int> &quadrilateral_removal_map) {
-    vector<int> map(G.n_vert, -1);
+pair<GraphContainer, vector<int>> FindComponentKeepReference(const GraphContainer &G, int source, vector<bool> &treated, vector<int> &quadrilateral_removal_map, const GraphContainer &FirstGraph) {
+    vector<int> map(FirstGraph.n_vert, -1);
     int n_vertices = 0;
     vector<pair<int, int> > edge_list;
 
@@ -184,7 +184,7 @@ pair<GraphContainer, vector<int>> FindComponentKeepReference(const GraphContaine
         component.AddEdge(map[(*edge).first], map[(*edge).second]);
     }
 
-    vector<int> return_map(G.n_vert, -1);
+    vector<int> return_map(FirstGraph.n_vert, -1);
     for(int i = 0; i < return_map.size(); ++i) {
         if (map[i] != -1) {
             return_map[map[i]] = quadrilateral_removal_map[i];
@@ -193,14 +193,14 @@ pair<GraphContainer, vector<int>> FindComponentKeepReference(const GraphContaine
     return make_pair(component, return_map);
 }
 
-vector<pair<GraphContainer, vector<int>>> FindConnectedComponentsKeepReference(const GraphContainer &G, vector<int> &quadrilateral_removal_map) {
+vector<pair<GraphContainer, vector<int>>> FindConnectedComponentsKeepReference(const GraphContainer &G, vector<int> &quadrilateral_removal_map, const GraphContainer &FirstGraph) {
     vector<pair<GraphContainer, vector<int>>> connected_components_pair;
     vector<bool> treated(G.n_vert, false);
 
     for (int i = 0; i < G.n_vert; ++i) {
         if (treated[i] == false) {
             pair<GraphContainer,vector<int>> component_pair;
-            component_pair = FindComponentKeepReference(G, i, treated, quadrilateral_removal_map);
+            component_pair = FindComponentKeepReference(G, i, treated, quadrilateral_removal_map, FirstGraph);
             connected_components_pair.push_back(component_pair);
         }
     }
