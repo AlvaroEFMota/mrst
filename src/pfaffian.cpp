@@ -41,7 +41,14 @@ int BipartitePfaffianVerification(const GraphContainer &G){
     /* Four Sum Decomposition
      *
      */
-    DecomposeInFourSum(G);
+    //DecomposeInFourSum(G);
+
+    //Planar Verification
+    //is_planar(G);
+
+    
+
+
 
     return IsPfaffian;
 }

@@ -119,7 +119,9 @@ public:
     /* Increase the graph vector size and return the new index of the graph vector
      *
      */
-    int AddVertex();
+    //int AddVertex();
+
+    bool ExistEdge(int x, int y);
 };
 
 

@@ -4,6 +4,7 @@
 #include "InadmissibleEdges.hpp"
 #include "TightCutDecomposition.hpp"
 #include "FourSumDecomposition.hpp"
+#include "PfaffianVerification.hpp"
 
 enum return_type { IsPfaffian, NotPfaffian, NotBipartite, NotPerfectMatching };
 

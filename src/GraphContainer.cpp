@@ -317,7 +317,7 @@ void GraphContainer::IsolateVerteces(vector<int> verticesToIsolate)
         for (vector<int>::iterator j = graph[*i].begin(); j != graph[*i].end(); ++j)
         {
             if (find(verticesToIsolate.begin(), verticesToIsolate.end(), (*j)) == verticesToIsolate.end())
-            { // use verticesToIsolate.find(*j) != verticesToIsolate.end(), remove 269--273
+            { 
                 pair<int, int> edge(*i, *j);
                 edges_for_removal.push_back(edge);
             }
@@ -489,10 +489,17 @@ vector<int> GraphContainer::OnlyRemoveVertices(vector<int> vertices)
     return map;
 };
 
-int GraphContainer::AddVertex()
-{
-    int new_index = graph.size();
-    graph.resize(graph.size() + 1);
-    n_vert++;
-    return new_index;
+bool GraphContainer::ExistEdge(int x, int y) {
+    if (find(graph[x].begin(), graph[x].end(), y) != graph[x].end()) {
+        return true;
+    }
+    return false;
 }
+
+// int GraphContainer::AddVertex()
+// {
+//     int new_index = graph.size();
+//     graph.resize(graph.size() + 1);
+//     n_vert++;
+//     return new_index;
+// }
