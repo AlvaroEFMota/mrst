@@ -20,30 +20,49 @@ bool is_planar(const GraphContainer &G_const) {
 }
 
 bool isomorfism_verification(const GraphContainer &G, const GraphContainer &heawood, vector<int> label_map, vector<bool> used, int used_counter, int G_vertex, int label) {
+    //cout << "Chamou a função com os parametros used_counter: " << used_counter << "  G_vertex: " << G_vertex << "  label: " << label << endl;
     label_map[G_vertex] = label;
     used[label] = true;
     used_counter++;
     for (auto neighbor: G.graph[G_vertex]) {
         if(label_map[neighbor] == -1) {
             for (auto h_vertex: heawood.graph[label]){
+                //cout << "testing " << h_vertex << endl;
                 if (!used[h_vertex]) {
-                    isomorfism_verification(G, heawood, label_map, used, used_counter, neighbor, h_vertex);
+                    //cout << "Chamando o vértice " << neighbor << " de " << h_vertex << endl;
+                    if (isomorfism_verification(G, heawood, label_map, used, used_counter, neighbor, h_vertex)) { return true; }
                 }
             }
+            return false;
         } else {
-            // check if it completed the map
-            if (used_counter == 14) return true;
-            for (auto vertex: G.graph[neighbor]){
-                //label_map[vertex] in heawood[label_map[neighbor]]
-                
-                // Check if the all label was completed
-                // Check if is there not label_map[vertex] in heawood.graph[label_map[neighbor]]
-                if (find(heawood.graph[label_map[neighbor]].begin(), heawood.graph[label_map[neighbor]].end(), label_map[vertex]) == heawood.graph[label_map[neighbor]].end()) {
-                    return false;
+
+            // Check if is there a label not filled
+            bool filled = true;
+            for (auto v: G.graph[neighbor]){
+                if (label_map[v] == -1) {
+                    filled = false;
                 }
+            }
+
+            if (filled) {
+                for (auto vertex: G.graph[neighbor]){
+                    // Check if is there not label_map[vertex] in heawood.graph[label_map[neighbor]]
+                    if (find(heawood.graph[label_map[neighbor]].begin(), heawood.graph[label_map[neighbor]].end(), label_map[vertex]) == heawood.graph[label_map[neighbor]].end()) {
+                        return false;
+                    }
+                }
+            }
+            // check if it completed the map
+            if (used_counter == 14) {
+                cout << "Permutation" << endl;
+                for (int j = 0; j < label_map.size(); ++j) {
+                    cout << j << " -- " << label_map[j] << endl;
+                }
+                return true;
             }
         }
     }
+    return false;
 }
 
 GraphContainer get_heawood_graph() {
@@ -80,15 +99,22 @@ bool headwood_verification(const GraphContainer G) {
         }
     }
     GraphContainer heawood = get_heawood_graph();
-    vector<bool> used;
+    heawood.ShowGraph("Heawood");
+    vector<bool> used(14, false);
     vector<int> label_map(14, -1);
-    int used_counter
-    isomorfism_verification(G, heawood, label_map, used, used_counter, 0, 0);
-    return true;
+    int used_counter = 0;
+    
+    for (int i = 0; i < heawood.graph.size(); ++i) {
+        //cout << "#### Root ##########" << endl;
+        if (isomorfism_verification(G, heawood, label_map, used, used_counter, 0, i)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool is_brace_pfaffian(const GraphContainer brace) {
-    headwood_verification(brace);
+    return headwood_verification(brace) || is_planar(brace);
 }
 
 bool is_all_braces_pfaffians(const vector<GraphContainer> braces) {

@@ -42,12 +42,8 @@ int BipartitePfaffianVerification(const GraphContainer &G){
      *
      */
     //DecomposeInFourSum(G);
-
-    //Planar Verification
-    //is_planar(G);
-
-    
-
+    bool val = headwood_verification(G);
+    cout << "Heawood verification = " << val << endl;
 
 
     return IsPfaffian;
