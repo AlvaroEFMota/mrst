@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     G.GraphInitFromStdin();
     G.ShowGraph("Initial Graph");
     if (BipartitePfaffianVerification(G)) {
-        //cout << "The graph is bipartite pfaffian!" << endl;
+        cout << "The graph is bipartite pfaffian!" << endl;
     }
     
 

@@ -5,7 +5,6 @@
 #include "utils.hpp"
 #include "InadmissibleEdges.hpp"
 
-vector<GraphContainer> DecomposeInFourSum(const GraphContainer &G_const);
-
+vector<GraphContainer> DecomposeAllBracesInFourSum(const vector<GraphContainer> braces);
 
 #endif

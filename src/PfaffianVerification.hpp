@@ -6,6 +6,5 @@
 #include <boost/graph/boyer_myrvold_planar_test.hpp>
 
 bool is_all_braces_pfaffians(const vector<GraphContainer> braces);
-bool headwood_verification(const GraphContainer G);
 
 #endif

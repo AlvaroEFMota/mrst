@@ -380,3 +380,18 @@ vector<GraphContainer> DecomposeInFourSum(const GraphContainer &G_const) {
 
     return final_components_list;
 }
+
+vector<GraphContainer> DecomposeAllBracesInFourSum(const vector<GraphContainer> braces) {
+    vector<GraphContainer> final_list;
+    for (auto brace: braces) {
+        vector<GraphContainer> response = DecomposeInFourSum(brace);
+        if (response.size() > 0) {
+           for (auto item: response) {
+            final_list.push_back(item);
+           }
+        } else {
+            final_list.push_back(brace);
+        }
+    }
+    return final_list;
+}

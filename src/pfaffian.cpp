@@ -18,9 +18,9 @@ int BipartitePfaffianVerification(const GraphContainer &G){
     /* Removal of inadmissibleEdges
      *
      */
-    //GraphContainer matching_covered_graph = RemovalInadmissibleEdges(G);
-    //G.ShowGraph("After the removal_inadmissible_edges");
-    //vector<GraphContainer> matching_covered_components = FindConnectedComponents(matching_covered_graph);
+    GraphContainer matching_covered_graph = RemovalInadmissibleEdges(G);
+    G.ShowGraph("After the removal_inadmissible_edges");
+    vector<GraphContainer> matching_covered_components = FindConnectedComponents(matching_covered_graph);
 
     // The two lines below should be removed
     //vector<GraphContainer> matching_covered_components;
@@ -29,9 +29,9 @@ int BipartitePfaffianVerification(const GraphContainer &G){
     /* Tight Cut Decoposition
      *
      */
-    /*vector<GraphContainer> braces = DecomposeInTightCuts(matching_covered_components);
+    vector<GraphContainer> braces = DecomposeInTightCuts(matching_covered_components);
 
-    int count = 0;
+    /*int count = 0;
     for (vector<GraphContainer>::iterator it = braces.begin(); it != braces.end(); ++it) {
         auto stream = std::stringstream{};
         stream << "Brace " << count++;
@@ -41,10 +41,9 @@ int BipartitePfaffianVerification(const GraphContainer &G){
     /* Four Sum Decomposition
      *
      */
-    //DecomposeInFourSum(G);
-    bool val = headwood_verification(G);
-    cout << "Heawood verification = " << val << endl;
+    vector<GraphContainer> final_brace_list = DecomposeAllBracesInFourSum(braces);
+    
+    bool val = is_all_braces_pfaffians(final_brace_list);
 
-
-    return IsPfaffian;
+    return val;
 }
