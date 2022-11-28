@@ -1,5 +1,8 @@
 #include "pfaffian.hpp"
 
+bool teste_funcao
+
+
 int BipartitePfaffianVerification(const GraphContainer &G){
     GraphContainer G_copy = G;
     /* Initial verification
