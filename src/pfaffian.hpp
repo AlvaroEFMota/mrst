@@ -13,4 +13,5 @@ enum return_type { IsPfaffian, NotPfaffian, NotBipartite, NotPerfectMatching };
  */
 int BipartitePfaffianVerification(const GraphContainer &G);
 
+
 #endif

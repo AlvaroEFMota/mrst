@@ -84,7 +84,7 @@ public:
      * matching in the current GraphContainer struct, then this algorithm will use such mathing
      * to find the maximum matching. Returns true if the mathing is perfect, returns false otherwise.
      */
-    bool KuhnMunkres(); // Separete this function in another file. ##########
+    bool KuhnMunkres();
 
     /* Show the graph, the partition and the matchings.
      **/
@@ -102,7 +102,7 @@ public:
 
     /* Verify if the current matching is a perfect matching. Return true if yes and false if not
      */
-    bool PerfectMatching(); // change name to HasPerfectMatching. Use Kuhn Munkres algorithm inside it
+    bool PerfectMatching(); 
 
     vector<pair<int,int>> ListAllEdges() const ;
 

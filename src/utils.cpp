@@ -56,7 +56,7 @@ void dfs_digraph_generation_rec(const GraphContainer &G_const, vector<vector<int
     color[vertex] = 1;
     for(vector<int>::const_iterator i = G_const.graph[vertex].begin(); i != G_const.graph[vertex].end(); ++i) {
         if (color[*i] == 0) {
-            cout << "Entrou em " << *i <<" Add " << vertex << "->" << *i << endl;
+            // cout << "Entrou em " << *i <<" Add " << vertex << "->" << *i << endl;
             color[*i] = 1;
             successor[vertex] = *i;
             digraph[vertex].push_back(*i);
@@ -64,7 +64,7 @@ void dfs_digraph_generation_rec(const GraphContainer &G_const, vector<vector<int
 
         } else if (color[*i] == 1) {
             if(vertex != successor[*i]) {
-                cout << "Em " << vertex << " foi encontrado o vértice cinza " << *i << " Adicionando " << vertex <<"->"<< successor[*i] << endl;
+                // cout << "Em " << vertex << " foi encontrado o vértice cinza " << *i << " Adicionando " << vertex <<"->"<< successor[*i] << endl;
                 digraph[vertex].push_back(successor[*i]);
             }
         }
@@ -79,13 +79,13 @@ void dfs_digraph_generation(const GraphContainer G_const, int source) {
     vector<int> successor(G_const.n_vert, -1);
     dfs_digraph_generation_rec(G_const, digraph, 0, color, successor);
 
-    for(int i = 0; i < digraph.size(); ++i) {
-        cout << i << ": ";
-        for(vector<int>::iterator j = digraph[i].begin(); j != digraph[i].end(); ++j){
-            cout << *j << " ";
-        }
-        cout << endl;
-    }
+    // for(int i = 0; i < digraph.size(); ++i) {
+        // cout << i << ": ";
+        // for(vector<int>::iterator j = digraph[i].begin(); j != digraph[i].end(); ++j){
+            // cout << *j << " ";
+        // }
+        // cout << endl;
+    // }
     
 }
 

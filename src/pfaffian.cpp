@@ -1,8 +1,5 @@
 #include "pfaffian.hpp"
 
-bool teste_funcao
-
-
 int BipartitePfaffianVerification(const GraphContainer &G){
     GraphContainer G_copy = G;
     /* Initial verification
@@ -25,6 +22,9 @@ int BipartitePfaffianVerification(const GraphContainer &G){
     G.ShowGraph("After the removal_inadmissible_edges");
     vector<GraphContainer> matching_covered_components = FindConnectedComponents(matching_covered_graph);
 
+    for (auto graph: matching_covered_components) {
+        graph.ShowGraph("components after removal of inadmissible edges");
+    }
     // The two lines below should be removed
     //vector<GraphContainer> matching_covered_components;
     //matching_covered_components.push_back(G_copy);
@@ -46,7 +46,7 @@ int BipartitePfaffianVerification(const GraphContainer &G){
      */
     vector<GraphContainer> final_brace_list = DecomposeAllBracesInFourSum(braces);
     
-    bool val = is_all_braces_pfaffians(final_brace_list);
+    bool pfaffian = is_all_braces_pfaffians(final_brace_list);
 
-    return val;
+    return pfaffian;
 }
