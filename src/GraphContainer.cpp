@@ -32,12 +32,6 @@ void GraphContainer::GraphInitFromStdin()
     int num_vertices, num_edges;
     cin >> num_vertices >> num_edges;
 
-    if (num_vertices % 2 != 0)
-    {
-        cout << "The graph G is pfaffian by emptiness" << endl;
-        exit(0);
-    }
-
     graph.resize(num_vertices);
     part.resize(num_vertices, false);
     matching.resize(num_vertices, -1);
@@ -58,12 +52,6 @@ void GraphContainer::GraphInitFromFile(string file_path)
     infile.open(file_path);
     int num_vertices, num_edges;
     infile >> num_vertices >> num_edges;
-
-    if (num_vertices % 2 != 0)
-    {
-        cout << "The graph G is pfaffian by emptiness" << endl;
-        exit(0);
-    }
 
     graph.resize(num_vertices);
     part.resize(num_vertices, false);

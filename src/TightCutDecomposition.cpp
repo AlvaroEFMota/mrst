@@ -37,9 +37,9 @@ GraphContainer GenerateShoreGraph(const GraphContainer &G, vector<bool> &shores,
         }
     }
 
-    for (int i = 0; i < map.size(); ++i) {
-        cout << "map [" << i <<" -> "<< map[i] <<"]"<< endl;
-    }
+    // for (int i = 0; i < map.size(); ++i) {
+    //     cout << "map [" << i <<" -> "<< map[i] <<"]"<< endl;
+    // }
 
     for (vector<Edge>::iterator edge = shore_edges.begin(); edge != shore_edges.end(); ++edge) {
         G_shore.AddEdge(map[(*edge).first], map[(*edge).second]);
@@ -156,14 +156,14 @@ vector<GraphContainer> TightCutReduction(const GraphContainer &G) {
         G_tmp.IsolateVerteces(vertices2);
         G_tmp.KuhnMunkres();
         if (!G_tmp.PerfectMatching()){
-            cout << "par de arestas do corte justo " << "{" << (*pair_edge).first.first <<", " << (*pair_edge).first.second <<"}, {" << (*pair_edge).second.first << ", " << (*pair_edge).second.second << "}" << endl;
-            G_tmp.ShowGraph("tmp");
+            // cout << "par de arestas do corte justo " << "{" << (*pair_edge).first.first <<", " << (*pair_edge).first.second <<"}, {" << (*pair_edge).second.first << ", " << (*pair_edge).second.second << "}" << endl;
+            // G_tmp.ShowGraph("tmp");
             vector<int> removed_vertices = {(*pair_edge).first.first,(*pair_edge).first.second,(*pair_edge).second.first,(*pair_edge).second.second};
             shores = FindShores(G_tmp, removed_vertices);
-            cout << "shores: ";
-            for(int shore = 0; shore < shores.size(); ++shore) {
-                cout << "[" << shore << ", " << shores[shore] << " ], ";
-            }
+            // cout << "shores: ";
+            // for(int shore = 0; shore < shores.size(); ++shore) {
+                // cout << "[" << shore << ", " << shores[shore] << " ], ";
+            // }
             contractions_graph = CContraction(G, shores);
             return contractions_graph;
         };

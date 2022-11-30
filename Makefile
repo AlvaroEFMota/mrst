@@ -32,3 +32,7 @@ test_pfaffian:
 	g++ src/tests/test_pfaffian.cpp src/FourSumDecomposition.cpp src/GraphContainer.cpp src/InadmissibleEdges.cpp src/pfaffian.cpp src/PfaffianVerification.cpp src/TightCutDecomposition.cpp src/utils.cpp -o test_pfaffian
 	mv test_pfaffian src/bin/
 	./src/bin/test_pfaffian
+time_complexity:
+	g++ src/time_complexity/random_graph_test.cpp src/FourSumDecomposition.cpp src/GraphContainer.cpp src/InadmissibleEdges.cpp src/pfaffian.cpp src/PfaffianVerification.cpp src/TightCutDecomposition.cpp src/utils.cpp -o random_graph_test
+	mv random_graph_test src/time_complexity/
+	./src/time_complexity/random_graph_test
