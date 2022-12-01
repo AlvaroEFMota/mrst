@@ -13,7 +13,11 @@ int main() {
     for (auto graph: matching_covered_components) {
         graph.ShowGraph("component");
     }
-    cout << "#################################### [OK] Heawood_verification " << endl;
+    if (matching_covered_components.size() == 3) {
+        cout << "#################################### [OK] Heawood_verification " << endl;
+    } else {
+        cout << "#################################### [FAIL] Heawood_verification " << endl;
+    }
     
     return 0;
 }

@@ -141,9 +141,9 @@ void ShowDigraph(vector<vector<int> > digraph, string str) {
 }
 
 void ShowVecPair(vector<pair<int, int> > vec_pair, string str) {
-    cout << "===== " << str << " =====" << endl;
+    cerr << "===== " << str << " =====" << endl;
     for(auto pair: vec_pair) {
-        cout << "$ " << pair.first << "->" << pair.second << endl;
+        cerr << "$ " << pair.first << "->" << pair.second << endl;
     }
 }
 

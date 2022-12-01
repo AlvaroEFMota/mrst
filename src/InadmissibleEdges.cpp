@@ -51,7 +51,7 @@ GraphContainer RemovalInadmissibleEdges(const GraphContainer &G) {
         G_tmp.KuhnMunkres();
         
         if (!G_tmp.PerfectMatching()){ // it's not a perfect_matching
-            cout << "Removed the inadmissble edge {" << (*i).first << ", " << (*i).second << "}" << endl;
+            cerr << "Removed the inadmissble edge {" << (*i).first << ", " << (*i).second << "}" << endl;
             G_new.RemoveEdge((*i).first, (*i).second);
         }
     }

@@ -12,7 +12,10 @@ int main(int argc, char *argv[])
     vector<GraphContainer> braces;
     braces.push_back(G);
     vector<GraphContainer> response = DecomposeAllBracesInFourSum(braces);
-    if (response.size() == 3) {
+    for (auto graph: response) {
+        graph.ShowGraph("Componen from 4 sum decomposition");
+    }
+    if (response.size() == 5) {
         cout << "#################################### [OK] 4 Sum Decomposition " << endl;
     } else {
         cout << "#################################### [FAIL] 4 Sum Decomposition " << endl;

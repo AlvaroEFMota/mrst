@@ -212,7 +212,7 @@ pair<GraphContainer, vector<int>> add_quadrilateral(pair<GraphContainer, vector<
         component_pair.second[component_pair.first.graph.size()-4+i] = quadrilateral[i];
     }
 
-    // component_pair.first.ShowGraph("component_pair");
+    component_pair.first.ShowGraph("component_pair");
 
     // cout << "Showing component_pair map after modiification" << endl;
     // for (int i = 0; i < component_pair.second.size(); ++i) {
@@ -228,7 +228,7 @@ pair<GraphContainer, vector<int>> add_quadrilateral(pair<GraphContainer, vector<
 
     // cout << "Showing component_pair inv map" << endl;
     // for (int i = 0; i < component_pair.second.size(); ++i) {
-    //     cout << i << " -|- " << inv_map[i] << endl;
+        // cout << i << " -|- " << inv_map[i] << endl;
     // }
 
     for (auto quadrilateral_vertex: quadrilateral) {
@@ -247,7 +247,7 @@ pair<GraphContainer, vector<int>> add_quadrilateral(pair<GraphContainer, vector<
         }
     }
 
-    // component_pair.first.ShowGraph("Brace");
+    component_pair.first.ShowGraph("Brace");
     return component_pair;
 }
 
@@ -284,10 +284,10 @@ vector<pair<GraphContainer, vector<int>>> FourSumReduction(const pair<GraphConta
     //     removal_map.push_back(-1);
     // }
     vector<pair<GraphContainer, vector<int>>> components_pair = FindConnectedComponentsKeepReference(G_tmp, removal_map, FirstGraph);
-    /*cout << "Showing the removal map" << endl;
-    for(int i = 0; i < removal_map.size(); ++i) {
-        cout << i << " ¬ " << removal_map[i] << endl;
-    }*/
+    // cout << "Showing the removal map" << endl;
+    // for(int i = 0; i < removal_map.size(); ++i) {
+    //     cout << i << " ¬ " << removal_map[i] << endl;
+    // }
 
     bool reduction_prerequisite = true;
     if (components_pair.size() >= 3) {
@@ -302,7 +302,7 @@ vector<pair<GraphContainer, vector<int>>> FourSumReduction(const pair<GraphConta
             // component_pair.first.ShowGraph("component");
             // cout << "Showing component map" << endl;
             // for (int i =0; i< component_pair.second.size(); ++i) {
-            //     cout << i << " ## " << component_pair.second[i] << endl;
+                // cout << i << " ## " << component_pair.second[i] << endl;
             // }
             if (component_pair.first.graph.size() < 6) {
                 reduction_prerequisite = false;

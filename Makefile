@@ -6,6 +6,7 @@ test:
 	make test_four_sum
 	make test_CFC
 	make test_inadmissible_edges
+	make test_tight_cut
 	make test_pfaffian
 
 output:
@@ -32,6 +33,10 @@ test_pfaffian:
 	g++ src/tests/test_pfaffian.cpp src/FourSumDecomposition.cpp src/GraphContainer.cpp src/InadmissibleEdges.cpp src/pfaffian.cpp src/PfaffianVerification.cpp src/TightCutDecomposition.cpp src/utils.cpp -o test_pfaffian
 	mv test_pfaffian src/bin/
 	./src/bin/test_pfaffian
+test_tight_cut:
+	g++ src/TightCutDecomposition.cpp src/tests/test_tight_cut_decomposition.cpp src/utils.cpp src/GraphContainer.cpp -o test_tight_cut_decomposition
+	mv test_tight_cut_decomposition src/bin/
+	./src/bin/test_tight_cut_decomposition
 time_complexity:
 	g++ src/time_complexity/random_graph_test.cpp src/FourSumDecomposition.cpp src/GraphContainer.cpp src/InadmissibleEdges.cpp src/pfaffian.cpp src/PfaffianVerification.cpp src/TightCutDecomposition.cpp src/utils.cpp -o random_graph_test
 	mv random_graph_test src/time_complexity/

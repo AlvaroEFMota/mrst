@@ -38,7 +38,7 @@ GraphContainer GenerateShoreGraph(const GraphContainer &G, vector<bool> &shores,
     }
 
     // for (int i = 0; i < map.size(); ++i) {
-    //     cout << "map [" << i <<" -> "<< map[i] <<"]"<< endl;
+        // cout << "map [" << i <<" -> "<< map[i] <<"]"<< endl;
     // }
 
     for (vector<Edge>::iterator edge = shore_edges.begin(); edge != shore_edges.end(); ++edge) {

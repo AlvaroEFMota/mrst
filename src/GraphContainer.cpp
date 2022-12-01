@@ -240,33 +240,33 @@ bool GraphContainer::BfsAugmentPath(int source)
 void GraphContainer::ShowGraph(string graph_desc) const
 {
     int count = 0;
-    cout << "----- " << graph_desc << " -----" << endl;
+    cerr << "----- " << graph_desc << " -----" << endl;
     for (vector<vector<int>>::const_iterator i = graph.begin(); i != graph.end(); ++i)
     {
-        cout << count++ << ": ";
+        cerr << count++ << ": ";
         for (vector<int>::const_iterator j = (*i).begin(); j != (*i).end(); ++j)
         {
-            cout << *j << " ";
+            cerr << *j << " ";
         }
-        cout << endl;
+        cerr << endl;
     }
-    cout << "Matching: ";
+    cerr << "Matching: ";
     ;
     for (int i = 0; i < n_vert; ++i)
     {
         if (matching[i] != -1 && i < matching[i])
         {
-            cout << "{" << i << ", " << matching[i] << "}, ";
+            cerr << "{" << i << ", " << matching[i] << "}, ";
         }
     }
-    cout << endl;
-    cout << "Parts: ";
+    cerr << endl;
+    cerr << "Parts: ";
     for (int i = 0; i < n_vert; ++i)
     {
-        part[i] ? cout << i << " white, " : cout << i << " black, ";
+        part[i] ? cerr << i << " white, " : cerr << i << " black, ";
     }
-    cout << endl;
-    cout << "-----------------------" << endl;
+    cerr << endl;
+    cerr << "-----------------------" << endl;
 }
 
 void GraphContainer::RemoveEdge(int v1, int v2)
@@ -483,11 +483,3 @@ bool GraphContainer::ExistEdge(int x, int y) {
     }
     return false;
 }
-
-// int GraphContainer::AddVertex()
-// {
-//     int new_index = graph.size();
-//     graph.resize(graph.size() + 1);
-//     n_vert++;
-//     return new_index;
-// }
