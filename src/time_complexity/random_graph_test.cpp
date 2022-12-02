@@ -2,11 +2,12 @@
 #include "../pfaffian.hpp"
 #include <iostream>
 #include <random>
+#include <math.h>
 
 using namespace std;
 
 #define SAMPLE_NUMBER 1
-#define MAX_NUM_VERTICES 1000
+#define MAX_NUM_VERTICES 2000
 
 GraphContainer generate_random_graph(int n_vert, int n_edge) {
     GraphContainer random_graph(n_vert);
@@ -39,9 +40,11 @@ int main() {
 
     srand((unsigned)time(NULL));
     int pfaffian_counter = 0;
-    for (int i = 3; 2*i <= MAX_NUM_VERTICES; ++i) {
+    for (int i = 565; 2*i <= MAX_NUM_VERTICES; ++i) {
         int new_i = 2*i;
-        int n_total_edge = (new_i*(new_i-1))/2;
+        // int n_total_edge = (new_i*(new_i-1))/2;
+        int n_total_edge = new_i+sqrt(new_i-1);
+        // int n_total_edge = new_i*sqrt(new_i-1);
         for (int j = new_i/2; j < n_total_edge; ++j) {
             float time_sum = 0.0;
             int n_tests = 0;
@@ -53,14 +56,10 @@ int main() {
                     time_sum += interval_time;
                     n_tests++;
                     pfaffian_counter++;
-                    // cerr << "#################################### [OK] Pfaffian Verification n: "<<new_i<<" m: "<<j<<" sample: "<<k<< " pfaffians: " << pfaffian_counter << "  time: "<< interval_time << endl;
-                } else {
-                    //if(k%10000 == 0)
-                     //cerr << "#################################### [FAIL] Pfaffian Verification  n: "<<new_i<<" m: "<<j<<" sample: "<<k<< " pfaffians: " << pfaffian_counter<< endl;
                 }
             }
             if (n_tests != 0)
-                cerr << "[TIME COMPLEXITY]\tn: "<<new_i<<"\tm: "<<j<< "\ttime: " <<fixed<< time_sum/float(n_tests) << "\tseconds\t found: " << n_tests << endl;
+                cout << new_i<<"\t"<<j<< "\t" <<fixed<< time_sum/float(n_tests)<< endl;
 
         }
     }
