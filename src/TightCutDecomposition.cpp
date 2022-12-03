@@ -29,17 +29,11 @@ GraphContainer GenerateShoreGraph(const GraphContainer &G, vector<bool> &shores,
         int w = (*edge).second;
         if (shores[u] == shore_type && shores[w] == shore_type) {
             shore_edges.push_back(*edge);
-            //cout << "shore edge: {" << (*edge).first << ", " << (*edge).second << "}" << endl;
         }
         else if (shores[u] == shore_type || shores[w] == shore_type) {
             cut_edges.push_back(*edge);
-            //cout << "cut edge: {" << (*edge).first << ", " << (*edge).second << "}" << endl;
         }
     }
-
-    // for (int i = 0; i < map.size(); ++i) {
-        // cout << "map [" << i <<" -> "<< map[i] <<"]"<< endl;
-    // }
 
     for (vector<Edge>::iterator edge = shore_edges.begin(); edge != shore_edges.end(); ++edge) {
         G_shore.AddEdge(map[(*edge).first], map[(*edge).second]);
@@ -93,11 +87,6 @@ vector<int> BfsFindShore(const GraphContainer &G, int source) {
                     my_queue.push(*it);
                     color[*it] = 1; // gray
                     distance[*it] = distance[vertex] + 1;
-                    //if (G.matching[*it] == -1) // Error
-                    //{
-                    //    target = *it;
-                    //    break;
-                    //}
                 }
             }
         }
@@ -156,22 +145,12 @@ vector<GraphContainer> TightCutReduction(const GraphContainer &G) {
         G_tmp.IsolateVerteces(vertices2);
         G_tmp.KuhnMunkres();
         if (!G_tmp.PerfectMatching()){
-            // cout << "par de arestas do corte justo " << "{" << (*pair_edge).first.first <<", " << (*pair_edge).first.second <<"}, {" << (*pair_edge).second.first << ", " << (*pair_edge).second.second << "}" << endl;
-            // G_tmp.ShowGraph("tmp");
             vector<int> removed_vertices = {(*pair_edge).first.first,(*pair_edge).first.second,(*pair_edge).second.first,(*pair_edge).second.second};
             shores = FindShores(G_tmp, removed_vertices);
-            // cout << "shores: ";
-            // for(int shore = 0; shore < shores.size(); ++shore) {
-                // cout << "[" << shore << ", " << shores[shore] << " ], ";
-            // }
             contractions_graph = CContraction(G, shores);
             return contractions_graph;
         };
     }
-
-    /*for (int i = 0; i < shores.size(); ++i) {
-        cout << "Vertex: " << i << "  praia: "<<  shores[i] << endl;
-    }*/
 
     return contractions_graph;
 }

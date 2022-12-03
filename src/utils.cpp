@@ -56,7 +56,6 @@ void dfs_digraph_generation_rec(const GraphContainer &G_const, vector<vector<int
     color[vertex] = 1;
     for(vector<int>::const_iterator i = G_const.graph[vertex].begin(); i != G_const.graph[vertex].end(); ++i) {
         if (color[*i] == 0) {
-            // cout << "Entrou em " << *i <<" Add " << vertex << "->" << *i << endl;
             color[*i] = 1;
             successor[vertex] = *i;
             digraph[vertex].push_back(*i);
@@ -64,7 +63,6 @@ void dfs_digraph_generation_rec(const GraphContainer &G_const, vector<vector<int
 
         } else if (color[*i] == 1) {
             if(vertex != successor[*i]) {
-                // cout << "Em " << vertex << " foi encontrado o vértice cinza " << *i << " Adicionando " << vertex <<"->"<< successor[*i] << endl;
                 digraph[vertex].push_back(successor[*i]);
             }
         }
@@ -78,15 +76,6 @@ void dfs_digraph_generation(const GraphContainer G_const, int source) {
     vector<int> color(G_const.n_vert, 0);
     vector<int> successor(G_const.n_vert, -1);
     dfs_digraph_generation_rec(G_const, digraph, 0, color, successor);
-
-    // for(int i = 0; i < digraph.size(); ++i) {
-        // cout << i << ": ";
-        // for(vector<int>::iterator j = digraph[i].begin(); j != digraph[i].end(); ++j){
-            // cout << *j << " ";
-        // }
-        // cout << endl;
-    // }
-    
 }
 
 void FindComponentMapInDigraph(const vector<vector<int> > &digraph, int source, vector<bool> &treated, vector<int> &map_vertex_component, int component_idx) {
@@ -99,7 +88,6 @@ void FindComponentMapInDigraph(const vector<vector<int> > &digraph, int source, 
 
     while (!my_queue.empty()) {
         int v = my_queue.front();
-        //cout << "Find the " << v << endl;
         my_queue.pop();
         color[v] = 2;
         treated[v] = true;
@@ -120,7 +108,6 @@ pair<vector<int>, int> FindConnectedComponentsMapInDigraph(const vector<vector<i
 
     for (auto pair: end_time) {
         if (!treated[pair.first]) {
-            //cout << "Starting from " << pair.first << " with the index " << component_idx << endl;
             FindComponentMapInDigraph(digraph, pair.first, treated, map_vertex_component, component_idx);
             component_idx++;
         }
@@ -206,7 +193,3 @@ vector<pair<GraphContainer, vector<int>>> FindConnectedComponentsKeepReference(c
     }
     return connected_components_pair;
 }
-
-//void AddVertexMap(GraphContainer &G, int map_reference) {
-    
-//}

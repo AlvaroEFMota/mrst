@@ -94,7 +94,6 @@ bool GraphContainer::ComputeBipartite()
     isBipartite = true;
     bipartitionComputed = true;
     return true;
-    // delete setted
 }
 
 bool GraphContainer::BfsBipartite(int source, vector<bool> &setted)
@@ -131,7 +130,7 @@ bool GraphContainer::BfsBipartite(int source, vector<bool> &setted)
         }
     }
 
-    // delelte color
+    // delete color
     return true;
 }
 
@@ -327,7 +326,6 @@ vector<pair<int, int>> GraphContainer::ListAllEdges() const
         {
             if (i < (*j))
             {
-                // cout << i << " - " << (*j) << endl;
                 pair<int, int> edge;
                 edge.first = i;
                 edge.second = (*j);

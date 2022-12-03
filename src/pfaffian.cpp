@@ -30,37 +30,17 @@ int BipartitePfaffianVerification(const GraphContainer &G){
     GraphContainer matching_covered_graph = RemovalInadmissibleEdges(G);
     vector<GraphContainer> matching_covered_components = FindConnectedComponents(matching_covered_graph);
 
-    // cout << "Removal of inadmissible edges" << endl;
-    // for (auto graph: matching_covered_components) {
-        // graph.ShowGraph("Component");
-    // }
-    // The two lines below should be removed
-    //vector<GraphContainer> matching_covered_components;
-    //matching_covered_components.push_back(G_copy);
-
     /* Tight Cut Decoposition
      *
      */
     vector<GraphContainer> braces = DecomposeInTightCuts(matching_covered_components);
-    // cout << "Tight cut decomposition" << endl;
     int count = 0;
-    // for (vector<GraphContainer>::iterator it = braces.begin(); it != braces.end(); ++it) {
-        // auto stream = std::stringstream{};
-        // stream << "Brace " << count++;
-        // (*it).ShowGraph(stream.str());
-    // }
 
     /* Four Sum Decomposition
      *
      */
     vector<GraphContainer> final_brace_list = DecomposeAllBracesInFourSum(braces);
-    // cout << "4 sum decomposition" << endl;
     int count2 = 0;
-    // for (auto brace: final_brace_list) {
-        // auto stream = std::stringstream{};
-        // stream << "final Brace " << count2++;
-        // brace.ShowGraph(stream.str());
-    // }
     
     bool pfaffian = is_all_braces_pfaffians(final_brace_list);
 
