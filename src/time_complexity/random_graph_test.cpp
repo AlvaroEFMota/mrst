@@ -29,8 +29,14 @@ GraphContainer generate_random_graph(int n_vert, int n_edge) {
     }
 
     // Choosing the first n_edge elements to construct the graph
-    for (int i = 0; i < n_edge; ++i) {
-        random_graph.AddEdge(all_possible_edges[i].first, all_possible_edges[i].second);
+    if (n_edge < all_possible_edges.size()) {
+        for (int i = 0; i < n_edge; ++i) {
+            random_graph.AddEdge(all_possible_edges[i].first, all_possible_edges[i].second);
+        }
+    } else {
+        for (int i = 0; i < all_possible_edges.size(); ++i) {
+            random_graph.AddEdge(all_possible_edges[i].first, all_possible_edges[i].second);
+        }
     }
 
     return random_graph;
@@ -39,7 +45,7 @@ GraphContainer generate_random_graph(int n_vert, int n_edge) {
 int main() {
 
     srand((unsigned)time(NULL));
-    int pfaffian_counter = 0;
+    /*int pfaffian_counter = 0;
     for (int i = 565; 2*i <= MAX_NUM_VERTICES; ++i) {
         int new_i = 2*i;
         // int n_total_edge = (new_i*(new_i-1))/2;
@@ -61,6 +67,17 @@ int main() {
             if (n_tests != 0)
                 cout << new_i<<"\t"<<j<< "\t" <<fixed<< time_sum/float(n_tests)<< endl;
 
+        }
+    }*/
+
+    int num_edge = 12000;
+    for (int vertex = 0; vertex < 100000/64; ++vertex) {
+        int new_vertex = vertex*64;
+        GraphContainer G = generate_random_graph(new_vertex, num_edge);
+        const clock_t begin_time = clock();
+        if (BipartitePfaffianVerification(G)) {
+            float interval_time = float( clock () - begin_time ) /  CLOCKS_PER_SEC;
+            cout << new_vertex <<"\t"<<num_edge<< "\t" <<fixed<< interval_time<< endl;
         }
     }
 
