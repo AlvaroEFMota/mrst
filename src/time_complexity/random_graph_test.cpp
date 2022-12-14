@@ -70,7 +70,7 @@ int main() {
         }
     }*/
 
-    int num_edge = 12000;
+    /*int num_edge = 12000;
     for (int vertex = 0; vertex < 100000/64; ++vertex) {
         int new_vertex = vertex*64;
         GraphContainer G = generate_random_graph(new_vertex, num_edge);
@@ -79,8 +79,18 @@ int main() {
             float interval_time = float( clock () - begin_time ) /  CLOCKS_PER_SEC;
             cout << new_vertex <<"\t"<<num_edge<< "\t" <<fixed<< interval_time<< endl;
         }
+    }*/
+    
+    int num_vertex = 12000;
+    for (int edge = 0; edge < 100000000/128; ++edge) {
+        int new_edge = edge*128;
+        GraphContainer G = generate_random_graph(num_vertex, new_edge);
+        const clock_t begin_time = clock();
+        if (BipartitePfaffianVerification(G)) {
+            float interval_time = float( clock () - begin_time ) /  CLOCKS_PER_SEC;
+            cout << num_vertex<<"\t"<<new_edge<< "\t" <<fixed<< interval_time<< endl;
+        }
     }
-
     
     return 0;
 }

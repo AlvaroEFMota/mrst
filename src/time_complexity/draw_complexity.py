@@ -25,8 +25,8 @@ import matplotlib.pyplot as plt
 x2d_fixed_edge = []
 y2d_fixed_edge = []
 # n_vertices = 1632
-m_arestas = 12000
-with open("src/time_complexity/edge12000.data", encoding = 'utf-8') as file:
+m_arestas = 8000
+with open("src/time_complexity/edge8000.data", encoding = 'utf-8') as file:
     count = 0
     for line in file:
             data = line.split()
@@ -68,7 +68,7 @@ y = y2d_fixed_edge[middle_idx]
 constant = y/(n*m**3)
 print(f'middle point = {n}, {y} with idx = {middle_idx}  total elements = {len(x2d_fixed_edge)}  constant = {constant}  inal data[{n}\t{m}\t{y}]')
 
-x_fixed_edge = np.linspace(0, 20000, 1000)
+x_fixed_edge = np.linspace(0, 25000, 1000)
 y_fixed_edge = constant*x_fixed_edge*m**3
 
 constant2 = y/(n**3*m)
@@ -81,8 +81,8 @@ plt.ylabel('t = Tempo (segundos)')
 # plt.xlim(0,6000)
 plt.ylim(0,6)
 plt.plot(x2d_fixed_edge,y2d_fixed_edge, '.')
-# plt.plot(x_fixed_edge,y_fixed_edge, label = f'O(nm³) t=({"{:.3e}".format(constant)})·n({m_arestas}³)')
-plt.plot(x_fixed_edge,y1_fixed_edge, label=f'O(n³m) t=({"{:.3e}".format(constant)})·n³({m_arestas})')
+plt.plot(x_fixed_edge,y1_fixed_edge, label=f'O(n³m) t=({"{:.3e}".format(constant2)})·n³({m_arestas})')
+plt.plot(x_fixed_edge,y_fixed_edge, label = f'O(nm³) t=({"{:.3e}".format(constant)})·n({m_arestas}³)')
 plt.legend()
 plt.grid()
 plt.show()
