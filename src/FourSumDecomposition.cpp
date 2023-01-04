@@ -28,7 +28,11 @@ pair<vector<vector<int>>, vector<vector<int>>> build_digraph_and_inverted_digrap
     vector<vector<int>> inv_digraph(G.n_vert);
 
     color[0] = 1;
-    dfs_build_graph(G, 0, color, edges, Q, end_time, end_time_count);
+    for(int i = 0; i < G.n_vert; ++i){ //This for is because the G graph can be disconnected
+        if (color[i] == 0) {
+            dfs_build_graph(G, i, color, edges, Q, end_time, end_time_count);
+        }
+    }
     
     for (auto edge: edges) {
         digraph[edge.first].push_back(edge.second);
@@ -75,6 +79,7 @@ vector<vector<int>> find_quadrilaterals(const GraphContainer &G_const, vector<in
 
     vector<int> map = G.RemoveVertices(the_3_vertices_2_white_1_black);
     vector<vector<int> > quadrilaterals;
+
 
     vector<int> cut_vertices = list_cut_vertices(G);
     vector<int> cut_vertices_mapped(cut_vertices.size(), 0);
