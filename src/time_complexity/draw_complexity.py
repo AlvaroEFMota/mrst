@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 
 x = []
 y = []
+# test = "n^(1,5)"
+test = "10n"
 with open("src/time_complexity/mgn_const_density-4.data", encoding = 'utf-8') as file:
     for line in file:
             data = line.split()
@@ -44,14 +46,14 @@ y_function = constant*x_function**4
 #y1_fixed_edge = constant2*(x_fixed_edge**3)*m
 
 plt.figure(figsize = (10,6))
-plt.title(f'Grafos com densidade constante m=1.5n')
+plt.title(f'Grafos com densidade constante m={test}')
 plt.xlabel('n = Vértices')
 plt.ylabel('t = Tempo (segundos)')
-# plt.xlim(0,6000)
-plt.ylim(0,7)
+plt.xlim(0, 175000)
+plt.ylim(0, 0.5)
 plt.plot(x, y, '.')
 #plt.plot(x_fixed_edge,y1_fixed_edge, label=f'O(n³m) t=({"{:.3e}".format(constant2)})·n³({m_arestas})')
-plt.plot(x_function, y_function, label = f'O(nm³) t=({"{:.3e}".format(constant)})·n(1.5n)³')
+plt.plot(x_function, y_function, label = f'O(nm³) t=({"{:.3e}".format(constant)})·n({test})³')
 plt.legend()
 plt.grid()
 plt.show()

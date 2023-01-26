@@ -40,7 +40,7 @@ test_tight_cut:
 time_complexity:
 	g++ src/time_complexity/random_graph_test.cpp src/FourSumDecomposition.cpp src/GraphContainer.cpp src/InadmissibleEdges.cpp src/pfaffian.cpp src/PfaffianVerification.cpp src/TightCutDecomposition.cpp src/utils.cpp -o random_graph_test
 	mv random_graph_test src/time_complexity/
-	./src/time_complexity/random_graph_test >> src/time_complexity/mgn_const_density-5.data 2> /dev/null
+	./src/time_complexity/random_graph_test >> src/time_complexity/mgn_const_density-6.data 2> /dev/null
 draw_time_complexity:
 	python src/time_complexity/draw_complexity.py
 draw_time_complexity_const-vertex:

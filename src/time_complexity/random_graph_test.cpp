@@ -65,7 +65,7 @@ GraphContainer generate_random_graph(int n_vert, int n_edge) {
 int main() {
 
     srand((unsigned)time(NULL));
-    
+
     /*int pfaffian_counter = 0;
     for (int i = 565; 2*i <= MAX_NUM_VERTICES; ++i) {
         int new_i = 2*i;
@@ -117,8 +117,8 @@ int main() {
     for (int vertex = 1 ; vertex < 100000000/128; ++vertex) {
         /*m=1,5n m=2n m=4n m=10n m=n^(1,5) m=0,1*n^2*/
         int new_vertex = vertex*128;
-        int edge = int(pow(new_vertex, 1.5));
-        // int edge = int(0.1*pow(new_vertex, 2));
+        // int edge = int(pow(new_vertex, 1.5));
+        int edge = int(0.1*pow(new_vertex, 2));
         GraphContainer G = generate_random_graph(new_vertex, edge);
 
         const clock_t begin_time = clock();
