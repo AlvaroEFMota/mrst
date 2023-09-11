@@ -1,5 +1,5 @@
 # Algorithm MRST (McCuaig, Robertson, Seymour, Thomas)
-This algorithm recognizes bipartite Pfaffian graphs efficiently in $O(nm^3)$.
+This algorithm recognizes bipartite pfaffian graphs efficiently in $O(nm^3)$.
 
 As this algorithm does not yet have a specific name, we named this algorithm using the initials of its creators (McCuaig, Robertson, Seymour, Thomas) to facilitate the reference of this algorithm in my 
 [final paper](https://github.com/AlvaroEFMota/mrst/blob/main/AlvaroEFMota%20-%20TCC%20-%20IMPLEMENTA%C3%87%C3%83O%20EFICIENTE%20DE%20ALGORITMO%20PARA%20RECONHECIMENTO%20DE%20GRAFOS%20BIPARTIDOS%20PFAFFIANOS.pdf).
